@@ -1,4 +1,4 @@
-## Microhack 1: Cluster Creation and Data Ingestion (Preview)
+## Microhack 1: Cluster Creation and Data Ingestion
 
 This Microhack is organized into the following 4 challenges:
 - Challenge 1: Create an ADX cluster

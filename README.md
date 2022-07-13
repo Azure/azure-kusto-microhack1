@@ -1,12 +1,14 @@
 ## Microhack 1: Cluster Creation and Data Ingestion (Preview)
 
-This Microhack is organised into the following 4 challenges:
-- Challenge 1: Create ADX cluster
+This Microhack is organized into the following 4 challenges:
+- Challenge 1: Create an ADX cluster
 - Challenge 2: Create integration with Azure services (Event Hub and Storage Account)
-- Challenge 3: Explore and transform data
-- Challenge 4: Check stats and key metrics of the cluster
+- Challenge 3: Starting with the basics of KQL
+<!---- Challenge 4: Check stats and key metrics of the cluster -->
 
-#### Challenge 1: Create ADX cluster
+Each challenge has a set of tasks that need to be completed in order to move on to the next challenge. It is advisable to complete the challenges and tasks in the prescribed order.
+
+#### Challenge 1: Create an ADX cluster
 To use Azure Data Explorer (ADX), you first have to create an ADX cluster, and create one or more databases in that cluster. Each database has tables. Then you can ingest data into a database so that you can run queries against it.
 
 In this challenge, you will design an ADX based architecture, create an ADX cluster and database.
@@ -36,8 +38,8 @@ Sign in to the Azure portal, select the + Create a resource button in the upper-
 - Cluster name: Must be unique for each participant. Call it: <youralias>microhackadx (cluster name must begin with a letter and contain lowercase alphanumeric characters.)
 - Region: France Central
 -	Enable performance update (EngineV3): keep the default (enabled)
--	Compute specification: For a production system, select the specification that best meets your needs (storage optimized or compute optimized). For this Microhack we can use ‘Compute optimized’, Extra small (2 cores), Standard_D11_v2.
-  With various compute SKU options to choose from, you can optimize costs for the performance and hot-cache requirements for your scenario. If you need the most optimal performance for a high query volume, the ideal SKU should be compute-optimized. If you need to query large volumes of data with relatively lower query load, the storage-optimized SKU can help reduce costs and still provide excellent performance. You can read more about ADX’s SKU types [here](https://docs.microsoft.com/en-us/azure/data-explorer/manage-cluster-choose-sku)
+-	Compute specification: For a production system, select the specification that best meets your needs (storage optimized or compute optimized). For this Microhack we can use the Dev (No SLA) SKU. </br>
+With various compute SKU options to choose from, you can optimize costs for the performance and hot-cache requirements for your scenario. If you need the most optimal performance for a high query volume, the ideal SKU should be compute-optimized. If you need to query large volumes of data with relatively lower query load, the storage-optimized SKU can help reduce costs and still provide excellent performance. You can read more about ADX’s SKU types [here](https://docs.microsoft.com/en-us/azure/data-explorer/manage-cluster-choose-sku).
 - Availability zones: keep the default.
 Move to the next tab (“Scale”). Choose how to scale your resource. Select the “Optimized autoscale” option. It’s always recommended to use this option. Optimized Autoscale is a built-in feature that helps clusters perform their best when demand changes. Optimized Autoscale enables your cluster to be performant and cost effective by adding and removing instances based on demand. For this microhack keep the default values (Minimum instance count == 2, Maximum instance count == 3)
 
@@ -55,7 +57,7 @@ When the deployment is complete, select Go to resource. You will be redirected t
 
 - Fill out the form with the following information.
   
-  ![Screen capture 1](/assets/images/Challenge1-Task2-Pic2.png)
+<img src="/assets/images/Challenge1-Task2-Pic2.png" width="450">
   
   | Setting       | Suggested Value   | Field Description                                                             |
   | ------------- | ----------------- | ----------------------------------------------------------------------------- |
@@ -71,7 +73,7 @@ When the deployment is complete, select Go to resource. You will be redirected t
 ##### Task 3: Write your first Kusto Query Language (KQL) query
   What is a Kusto query?
   Azure Data Explorer provides a web experience that enables you to connect to your Azure Data Explorer clusters and write and run Kusto Query Language queries. The web experience is available in the Azure portal and as a stand-alone web application, the Azure Data Explorer Web UI, that we will use later.
-  Kusto query is a read-only request to process data and return results. The request is stated in plain text that's easy to read. A Kusto query has one or more query statements and returns data in a tabular or graph format.
+  A Kusto query is a read-only request to process data and return results. The request is stated in plain text that's easy to read. A Kusto query has one or more query statements and returns data in a tabular or graph format.
   In the next challenges, we'll ingest data to the cluster, and then learn the most important concepts in KQL and write interesting queries. In this task, you will write a few basic queries to get an understanding of the environment.
   To start, go to the “Query” blade. In this example, you'll use the Azure Data Explorer web interface as a query editor (Kusto Query Language can also be used in Azure Monitor Logs, Azure Sentinel, and other services that are built on-top of Azure Data Explorer.)
   
@@ -80,7 +82,7 @@ When the deployment is complete, select Go to resource. You will be redirected t
   We can see our cluster and the database that we created.
 To tun KQL queries, we must select the database that the query will run on (the scope). 
 To select the data base, just click on the database name.
-Now – you can write a simple QKL query: print ("hello world"),
+Now – you can write a simple KQL query: print ("hello world"),
 and hit the “Run” button. The query will be executed and its result can be seen in the result grid on the bottom of the page. 
   
   ![Screen capture 1](/assets/images/Challenge1-Task3-Pic2.png)
@@ -107,14 +109,14 @@ Save the new diagnostic logs settings and metrics.
 
   **Expected Learning Outcomes:**
   - Create continuous ingestion from Azure Event Hub (a managed pipeline) 
-  - Create one-time ingestion from Azure Blob Storage (direct access) to your ADX cluster.
+  - Create one-time ingestion from Azure Blob Storage to your ADX cluster.
 
-  ##### Task 1: Use the “One-click” UI (User Interfaces) Create a data connection to Event Hub
+  ##### Task 1: Use the “One-click” UI (User Interfaces) to create a data connection to Event Hub
 For the best user experience, we will use the Azure Data Explorer Web UI (aka: Kusto web Explorer/KWE). To open it, click on the “Open in Web UI” or just go to [Kusto Web Explorer](https://dataexplorer.azure.com)
   
   ![Screen capture 1](/assets/images/Challenge2-Task1-Pic1.png)
   
-  The web UI opens. The messages are in a JSON format and they are being sent to an event hub named "adx-microhac-eh-2". This is how a sample message looks like:
+  The web UI opens. The messages are in a JSON format and they are being sent to your event hub. This is how a sample message looks like:
   ```
   {
   "messageProperties": {
@@ -149,28 +151,29 @@ For the best user experience, we will use the Azure Data Explorer Web UI (aka: K
 }
 ```
 
-KWE lets us easily connect to Azure Event Hub and build a table which is schema based on an event sample data. Go to the “Data” blade. The name of this capability is “One-click ingestion” and it allows you to quicky ingest data.
+KWE lets us easily connect to Azure Event Hub and build a table which is schema based on an event sample data. Go to the “Data” blade. The name of this capability is “One-click ingestion” and it allows you to quickly ingest data.
   
-  ![Screen capture 1](/assets/images/Challenge2-Task1-Pic2.png)
-  
+<img src="/assets/images/Challenge2-Task1-Pic2.png" width="500">
+
   ##### Task 2: Configure the Event hub data connection
   
   The ’Ingest new data’ wizard opens. 
   
   Destination tab:
-The Cluster and Database fields are auto-populated. Select the ADX cluster and the Database that you created in challenge #1. We haven’t created a table, so use the “Create new table” option. 
+The Cluster and Database fields are auto-populated. Select the ADX cluster and the Database that you created in challenge 1. We haven’t created a table, so use the “Create new table” option. In order to make it easier to query, we recommend using a table name without hyphens, '-'. </br>
+The table will be named LogisticsTelemetry.
   
   Source tab:
 Set the Source type to “Event Hub”, and specify the event hub details:
-- Subscription: Kusto_PM_Experiments
-- Event hub namepsace: adx-microhack-eh-ns
-- Event hub: adx-microhac-eh-2
-- Data connection name: we used ‘Database1-adx-microhack-eh’. Data connection connects ADX database to Event hub (or to storage account through Event Grid notifications)
-- Consumer group: use your respective consumer group
+- Subscription: Your event hub's subscription
+- Event hub namespace: Your event hub's namespace
+- Event hub: Your event hub name
+- Data connection name: Set a name for your data connection. We used ‘Database1-adx-microhack-eh’. Data connection connects ADX database to Event hub (or to storage account through Event Grid notifications)
+- Consumer group: you can use the default one
 - Compression: None
   Event system properties: leave empty. For this Microhack, we are not going to use them. (System properties store properties (meta data) that are set by the Event Hubs service, at the time the event is enqueued. ADX can embed the selected properties into a new column in your destination table.)
   
-  ![Screen capture 1](/assets/images/Challenge2-Task2-Pic1.png)
+  <img src="/assets/images/Challenge2-Task2-Pic1.png" width="500">
 
   Click on “Next: Schema” 
   
@@ -196,7 +199,7 @@ This is an example of the telemetry JSON (that is part of a bigger JSON that is 
   
   For this microhack, we want to learn how ADX deals with dynamic fields, so we will keep the Nested levels as 1.
   
-  ![Screen capture 1](/assets/images/Challenge2-Task2-Pic3.png)
+  <img src="/assets/images/Challenge2-Task2-Pic3.png" width="450">
   
   ![Screen capture 1](/assets/images/Challenge2-Task2-Pic4.png)
   
@@ -232,19 +235,21 @@ The desired result:
   Run the query by either selecting the Run button above the query window or selecting Shift+Enter on the keyboard.
   Use the “Manage Data Connection” link (under the “Monitor” section) to go to the portal and review your data connection. The data connection is saved under the Database.
   
-  ![Screen capture 1](/assets/images/Challenge2-Task2-Pic7.png)
+<img src="/assets/images/Challenge2-Task2-Pic7.png" width="600">
 
-  ##### Task 3: Use the “One-click” UI (User Interfaces) to create a data connection to blob storage
+  ##### Task 3: Use the “One-click” UI (User Interfaces) to create a data connection to Azure blob storage
   
-  This time, we want to ingest data from an Azure Storage account. This storage account has the data on device’s telemetry history from 30th December 2021, device property changes and the commands executed on the device. 
+  This time, we will ingest data from an Azure Storage account. We will ingest two datasets: </br>
+    1. Logistics telemetry data. This time, the table will be named LogisticsTelemetryHistorical.  </br> 
+    2. Data on New York City taxi rides, which will be used for Microhack 2
   
   Go again to the “Data management” tab, and select the **Ingest from blob container** option under **Continuous ingestion**
   
-  ![Screen capture 1](/assets/images/Challenge2-Task3-Pic1.png)
+  <img src="/assets/images/Challenge2-Task3-Pic1.png" width="450">
   
   Make sure the cluster and the Database fields are correct. Select **Create new table**
   
-  ![Screen capture 1](/assets/images/Challenge2-Task3-Pic2.png)
+  <img src="/assets/images/Challenge2-Task3-Pic2.png" width="450">
   
   In the **Link to source**, paste the SAS URL of the blob storage (the proctors will provide this information). Then select one of the **Schema defining file** (all the files in that blob storage have the same schema) and click **Next**
   
@@ -254,46 +259,80 @@ The desired result:
   
   ![Screen capture 1](/assets/images/Challenge2-Task3-Pic4.png)
   
-  Once the message **“Queueing blobs is complete”** appears, you can close this page. Then, you can click on the **Event Grid** link under **Continuous Ingestion**.
+  Wait for the ingestion to be completed. For production modes, you could use Azure Event Grid for continuous Blob ingestion. The **Event Grid** link under **Continuous Ingestion** will create the Event Grid resource for that. We won't use this option in this Microhack.
 
-  ![Screen capture 1](/assets/images/Challenge2-Task3-Pic5.png)
+   <img src="/assets/images/ingestion-completed.png" width="520">
   
-  ![Screen capture 1](/assets/images/Challenge2-Task3-Pic6.png)
+  <!--- Event Grid Continuous ingestion images 
+![Screen capture 1](/assets/images/Challenge2-Task3-Pic6.png)
+ ![Screen capture 1](/assets/images/Challenge2-Task3-Pic7.png)  --->
   
-  ![Screen capture 1](/assets/images/Challenge2-Task3-Pic7.png)
-  
-  Repeat the above steps for ingesting data from the following blob containers: (the proctors will provide this information)
-  - logistics-connectivity-commands
-  - logistics-telemetry
-  - logistics-properties
-
-  Check the table
+  Verify that data was ingested to the table
   ```
-  LogisticsLifecycle
+  LogisticsTelemetryHistorical
   | count 
   ```
+
+Repeat the above steps for ingesting data from the New York City container.
 
   **Relevant docs for this challenge:**
   - [Azure Data Explorer data ingestion overview | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/ingest-data-overview)
   - [Use one-click ingestion to ingest data into Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/ingest-data-one-click)
    
-  
-#### Challenge 3: Explore and transform data
-  
-**Expected Learning Outcomes:**
-- Write simple queries using Kusto Query Language
-- Create update policies to transform the data at ingestion
-  
-  
-##### Task 1: Explore the data
-  
-  Kusto queries can be used to filter data and return specific information. Recall that you've looked at arbitrary rows of data to get a sense of its structure. Now, you'll learn how to choose specific rows of the data. The where operator filters results that satisfy a certain condition.
 
-  ```
+### Challenge 3: Starting with the basics of KQL
+
+In this challenge you’ll write queries in Kusto Query Language (KQL) to explore and gain insights from your data. 
+
+Expected Learning Outcomes:
+- Know how to write queries with KQL.
+- Use KQL to explore data by using the most common operators.
+
+**What is a Kusto query?**
+A Kusto query is a read-only request to process data and return results. The request is stated in plain text that's easy to read, author, and automate. A Kusto query has one or more query statements and returns data in a tabular or graph format.
+
+**What is a tabular statement?**
+The most common kind of query statement is a tabular expression statement. Both its input and its output consist of tables or tabular datasets.
+
+Tabular statements contain zero or more operators. Each operator starts with a tabular input and returns a tabular output. Operators are sequenced by a pipe (|). Data flows, or is piped, from one operator to the next. The data is filtered or manipulated at each step and then fed into the following step.
+
+It's like a funnel, where you start out with an entire data table. Each time the data passes through another operator, it's filtered, rearranged, or summarized. Because the piping of information from one operator to another is sequential, the query's operator order is important. At the end of the funnel, you're left with a refined output.
+Let's look at an example query:
+
+```
+LogisticsTelemetryHistorical
+| where enqueuedTime > ago(7d) 
+| where messageSource == "telemetry"
+| count 
+```
+
+This query has a single tabular expression statement. The statement begins with a reference to the table LogisticsTelemetry and contains the operators where and count. Each operator is separated by a pipe. The data rows for the source table are filtered by the value of the enqueuedTime column and then filtered by the value of the messageSource column. In the last line, the query returns a table with a single column and a single row that contains the count of the remaining rows.
+
+References:
+- [SQL to Kusto cheat sheet](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/sqlcheatsheet)
+- [KQL cheat sheets](https://github.com/marcusbakker/KQL/blob/master/kql_cheat_sheet.pdf)
+
+<!--
+#### Task 0: Connect to the cluster
+
+For the following tasks, connect to the cluster [ADX Microhack Cluster](https://adxmicrohackcluster.eastus.kusto.windows.net/)
+
+![Screen capture 1](/assets/images/Challenge5-Task0-Pic1.png)
+
+![Screen capture 1](/assets/images/Challenge5-Task0-Pic2.png)
+
+-->
+
+##### Task 1: Basic KQL queries - explore the data
+  
+In this task, you will see some KQL examples. For this task, we will use the table LogisticsTelemetry, which obtains data from the event hub. </br> 
+Execute the queries and view the results. KQL queries can be used to filter data and return specific information. Now, you'll learn how to choose specific rows of the data. The where operator filters results that satisfy a certain condition. 
+
+```
 LogisticsTelemetry
 | where deviceId startswith "x"
 | take 10
-  ```
+```
 
 Similarly, you can filter where the time of an event occurred more than a certain number of years/days/minutes ago. For example, run the following query, where 2m means 2 minutes:
 
@@ -318,7 +357,7 @@ LogisticsTelemetry
 | summarize count()
  ``` 
  
-Find out how many records startswith "x" 
+Find out how many records have deviceId that startswith "x" 
 
 ```
 LogisticsTelemetry
@@ -326,7 +365,7 @@ LogisticsTelemetry
 | summarize count()
 ```
   
-Find out how many records start with "x" , per device ID (aggregate by device ID)
+Find out how many records have deviceId that startswith "x", per device ID (aggregate by device ID)
 
 ```
 LogisticsTelemetry
@@ -334,7 +373,7 @@ LogisticsTelemetry
 | summarize count() by deviceId
 ```
   
-Find out how many records startswith "x" , per device ID (aggregate by device ID). Render a timechart
+Find out how many records startswith "x", per device ID (aggregate by device ID). Render a timechart
 
 ```
 LogisticsTelemetry
@@ -343,68 +382,106 @@ LogisticsTelemetry
 | render piechart 
 ```
 
+KQL makes it simple to access fields in JSON and treat them like an independent column:
 
 ```
 LogisticsTelemetry
-| where deviceId startswith "x"
-| summarize count() by deviceId
-| render piechart 
-```
-
-```
-LogisticsTelemetry
+// | where enqueuedTime > ago(10d) 
 | extend h = telemetry.Humidity
-| summarize avg(toint(h)) by bin(enqueuedTime, 1m)
+| summarize avg(toint(h)) by bin(enqueuedTime, 1h)
 | render timechart 
 ```
 
+For the following tasks, we will use the table LogisticsTelemetryHistorical.
 
-  ##### Task 2: Create an update policy
-  
-  By taking 10 records, we can see that the telemetry column has a JSON structure. In this task we will use update policy to manipulate the raw data in the LogisticsTelemetry table (the source table) and transform the JSON data into separate columns in a new table that we’ll create (“target table”).
-We want to create a new table, with a calculated column (we will call it: NumOfTagsCalculated) that contains the following value: telemetry.TotalTags + telemetry.TotalTags - telemetry.LostTags.
-The schema of the new table would be:
-```
-  ( deviceId:string, enqueuedTime:datetime, NumOfTagsCalculated:int, Temp:real)
-```
-  
-  ![Screen capture 1](/assets/images/Challenge3-Task2-Pic1.png)
-  
-  Example (note that the order of the keys may be different):
-  
-  ```
-{
-    "BatteryLife": 73,
-    "Light": "70720.236143472212",
-    "Tilt": "18.608539012789223",
-    "Humidity": "60.178854625386215",
-    "Shock": "-4.6141182265359628",
-    "Pressure": "529.61165751122712",
-    "ActiveTags": 165,
-    "TransportationMode": "Ocean",
-    "Status": "Online",
-    "LostTags": 9,
-    "Temp": "7.5054504554744765",
-    "TotalTags": 185,
-    "Location": {
-        "alt": 1361.0469,
-        "lon": -107.7473,
-        "lat": 36.0845
-    }
-}
-```
-  
-  **Build the target table**
-  
-  **Create a function for the update policy**
-    
-  **Create the update policy**
+#### Task 2: Explore the table and columns
+Write a query to get the schema of the table. 
+
+Expected result:  
+<img src="/assets/images/Schema.png" width="400">
+
+[getschema operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/getschemaoperator)
+
+#### Task 3: Keep the columns of your interest
+Write a query to get only specific desired columns: deviceId, enqueuedTime, Temp. Take arbitrary 10 records.
+
+Expected result:</br>
+<img src="/assets/images/project.png" width="400">
+
+[project-away operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectawayoperator)
+
+[Project operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator)
+
+#### Task 4: Filter the output
+Write a query to get only specific desired columns: deviceId, enqueuedTime, Temp. Take arbitrary 10 records from the past 90 days.
+
+Hint 1: “ago” </br>
+Hint 2: In case you see 0 records, remember that operators are sequenced by a pipe (|). Data is piped, from one operator to the next. The data is filtered or manipulated at each step and then fed into the following step. By using the ‘Take’ operator, there is no guarantee which records are returned
+
+[where operator in Kusto query language - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/whereoperator)
+
+#### Task 5: Sorting the results
+Write a query to get the 5 records which have the highest temperature. Write another query get the 5 records which have the lowest temperature.
+
+[sort operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/sortoperator)
+
+#### Task 6: Reorder, rename, add columns
+Write a query to convert Fahrenheit temperatures to Celsius temperatures. For readability, show the Fahrenheit temperature and the Celsius temperaturesa as the 2 left-most columns. You can use the following formula: 
+C = (F – 32) * (5.0/9.0) <br>
+Take 5 random records from the past week.
+Hint 1: 'project' operator provides lot more features
+Hint 2: We used 5.0 and 9.0, rather than 5 and 9 to ensure these numbers were to the 'real' data type (double-precision floating-point format), rather than 'long' (a signed integer, Int64)
+
+Expected result:</br>
+<img src="/assets/images/temp.png" width="600">
+
+[extend operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator)
+[project-rename operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectrenameoperator)
+[project-reorder operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectreorderoperator)
 
 
-  
-**Relevant docs for this challenge:**
-  - [Kusto update policy - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/management/updatepolicy)
-    
+#### Task 7: Total number of records
+Write a query to find out how many records are in the table. 
+
+[count operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/countoperator)
+
+#### Task 8: Aggregations and string operations
+Write a query to find out how many records have deviceId starting with 'x'. <br>
+Write another query to find out how many records have deviceId starting with 'x', per device ID (aggregated by deviceId).</br>
+Expected result for the second query:</br>
+<img src="/assets/images/count_by.png" width="250">
+
+[String operators - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/datatypes-string-operators)
+
+[summarize operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/summarizeoperator)
+
+#### Task 9: Render a chart
+Write a query to find out how many records startswith "x" , per device ID (aggregated by device ID) and render a piechart.
+
+Expected result:</br>
+<img src="/assets/images/pie.png" width="500">
+
+[render operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/renderoperator?pivots=azuredataexplorer)
+
+#### Task 10: Create bins and visualize time series 
+Write a query to show a timechart of the number of records over time. Use 10 minute bins (buckets). Each point on the timechart represent the number of devices on that bucket.
+
+Expected result:</br>
+<img src="/assets/images/chart.png" width="650">
+
+[bin() - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction)
+
+#### Task 11: Aggregations with time series visualizations
+Write a query to show a timechart of the **average temperature** over time. Use 30 minute bins (buckets) Each point on the timechart represent the average temperature in that 30 min period.
+Hint: summarize avg(Temp) by bin(enqueuedTime, 30m) 
+
+Expected result:</br>
+<img src="/assets/images/timeseries.png" width="650">
+
+[summarize operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/summarizeoperator)
+
+<!---
+
 #### Challenge 4: Check stats and key metrics of the cluster
     
   ##### Task 1:  #####
@@ -425,24 +502,4 @@ The schema of the new table would be:
 **Relevant docs for this challenge:**
   - [Monitor Azure Data Explorer performance, health & usage with metrics | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/using-metrics)
 
-## Contributing
-
-This project welcomes contributions and suggestions.  Most contributions require you to agree to a
-Contributor License Agreement (CLA) declaring that you have the right to, and actually do, grant us
-the rights to use your contribution. For details, visit https://cla.opensource.microsoft.com.
-
-When you submit a pull request, a CLA bot will automatically determine whether you need to provide
-a CLA and decorate the PR appropriately (e.g., status check, comment). Simply follow the instructions
-provided by the bot. You will only need to do this once across all repos using our CLA.
-
-This project has adopted the [Microsoft Open Source Code of Conduct](https://opensource.microsoft.com/codeofconduct/).
-For more information see the [Code of Conduct FAQ](https://opensource.microsoft.com/codeofconduct/faq/) or
-contact [opencode@microsoft.com](mailto:opencode@microsoft.com) with any additional questions or comments.
-
-## Trademarks
-
-This project may contain trademarks or logos for projects, products, or services. Authorized use of Microsoft 
-trademarks or logos is subject to and must follow 
-[Microsoft's Trademark & Brand Guidelines](https://www.microsoft.com/en-us/legal/intellectualproperty/trademarks/usage/general).
-Use of Microsoft trademarks or logos in modified versions of this project must not cause confusion or imply Microsoft sponsorship.
-Any use of third-party trademarks or logos are subject to those third-party's policies.
+-->

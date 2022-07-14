@@ -8,6 +8,11 @@ This Microhack is organized into the following 4 challenges:
 
 Each challenge has a set of tasks that need to be completed in order to move on to the next challenge. It is advisable to complete the challenges and tasks in the prescribed order.
 
+---
+Earn a digital badge! In order to receive the ADX microhack digital badge, you will need to complete the challenges marked with 🎓. Please submit the KQL queries/commands of these challenges in the following link: [Answer sheet - ADX Microhack 2](https://forms.office.com/r/RkyRWgVN0G)
+---
+
+---
 #### Challenge 1: Create an ADX cluster
 To use Azure Data Explorer (ADX), you first have to create an ADX cluster, and create one or more databases in that cluster. Each database has tables. Then you can ingest data into a database so that you can run queries against it.
 
@@ -19,6 +24,7 @@ In addition, you will get familiarized with two tools that enable you to connect
 - Use ADX clients such as Kusto Web Explorer and Kusto Explorer
 - The initial configuration of the cluster at creation time
 
+---
 ##### Task 1: Create an ADX cluster resource
 Sign in to the Azure portal, select the + Create a resource button in the upper-left corner of the portal’s main page.
 
@@ -49,6 +55,7 @@ Creating an ADX cluster takes in average 10-15 minutes.
 
 When the deployment is complete, select Go to resource. You will be redirected to the ADX cluster resource page. On the top of the Overview page, you can see the basic details of the cluster, like: the Subscription, the state (running) and the URI.
 
+---
 ##### Task 2: Create a Database
 - You're now ready for the second step in the process: database creation.
 - On the Overview tab, select Create database. Alternatively, you can go to the “Databases” blade.
@@ -70,25 +77,27 @@ When the deployment is complete, select Go to resource. You will be redirected t
 
   ![Screen capture 1](/assets/images/Challenge1-Task2-Pic3.png)
   
+---
 ##### Task 3: Write your first Kusto Query Language (KQL) query
   What is a Kusto query?
-  Azure Data Explorer provides a web experience that enables you to connect to your Azure Data Explorer clusters and write and run Kusto Query Language queries. The web experience is available in the Azure portal and as a stand-alone web application, the Azure Data Explorer Web UI, that we will use later.
-  A Kusto query is a read-only request to process data and return results. The request is stated in plain text that's easy to read. A Kusto query has one or more query statements and returns data in a tabular or graph format.
-  In the next challenges, we'll ingest data to the cluster, and then learn the most important concepts in KQL and write interesting queries. In this task, you will write a few basic queries to get an understanding of the environment.
+  Azure Data Explorer provides a web experience that enables you to connect to your Azure Data Explorer clusters and write and run Kusto Query Language queries. The web experience is available in the Azure portal and as a stand-alone web application, the Azure Data Explorer Web UI, that we will use later.<br>
+  A Kusto query is a read-only request to process data and return results. The request is stated in plain text that's easy to read. A Kusto query has one or more query statements and returns data in a tabular or graph format.<br>
+  In the next challenges, we'll ingest data to the cluster, and then learn the most important concepts in KQL and write interesting queries. In this task, you will write a few basic queries to get an understanding of the environment.<br>
   To start, go to the “Query” blade. In this example, you'll use the Azure Data Explorer web interface as a query editor (Kusto Query Language can also be used in Azure Monitor Logs, Azure Sentinel, and other services that are built on-top of Azure Data Explorer.)
   
   ![Screen capture 1](/assets/images/Challenge1-Task3-Pic1.png)
   
   We can see our cluster and the database that we created.
-To tun KQL queries, we must select the database that the query will run on (the scope). 
-To select the data base, just click on the database name.
+To run KQL queries, you must select the database that the query will run on (the scope). <br>
+To select the data base, just click on the database name.<br>
 Now – you can write a simple KQL query: print ("hello world"),
 and hit the “Run” button. The query will be executed and its result can be seen in the result grid on the bottom of the page. 
   
   ![Screen capture 1](/assets/images/Challenge1-Task3-Pic2.png)
   
-  You can also download [Kusto Explorer](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/tools/kusto-explorer), the desktop client to run queries and benefit from some advanced features available in the client.
+  Windows users can also download [Kusto Explorer](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/tools/kusto-explorer), a desktop client to run queries and benefit from advanced features available in the client.
 
+---
 ##### Task 4: Enable Diagnostic logs
   Azure Monitor diagnostic logs provide monitoring data about the operation of Azure resources. ADX uses diagnostic logs for insights on ingestion, commands, queries, and tables usage. You can export operation logs to Azure Storage, Event Hub, or Log Analytics.
   Diagnostic logs are disabled by default. To enable diagnostic logs, go to your cluster page in the portal. Under Monitoring, select Diagnostic settings. 
@@ -100,7 +109,8 @@ Select all the log categories and metrics (SucceededIngestion, FailedIngestion, 
 For this microhack, select the Destination details to be a Log Analytics workspace and select your own workspace or create a new one.
 Save the new diagnostic logs settings and metrics.
 
-  
+---
+---
 #### Challenge 2: Create integration with Azure services (Event Hub and Storage Account)
   
   Data ingestion to ADX is the process used to load data records from one or more sources into a table in your ADX cluster. Once ingested, the data becomes available for query.
@@ -111,6 +121,7 @@ Save the new diagnostic logs settings and metrics.
   - Create continuous ingestion from Azure Event Hub (a managed pipeline) 
   - Create one-time ingestion from Azure Blob Storage to your ADX cluster.
 
+---
   ##### Task 1: Use the “One-click” UI (User Interfaces) to create a data connection to Event Hub
 For the best user experience, we will use the Azure Data Explorer Web UI (aka: Kusto web Explorer/KWE). To open it, click on the “Open in Web UI” or just go to [Kusto Web Explorer](https://dataexplorer.azure.com)
   
@@ -155,6 +166,7 @@ KWE lets us easily connect to Azure Event Hub and build a table which is schema 
   
 <img src="/assets/images/Challenge2-Task1-Pic2.png" width="500">
 
+---
   ##### Task 2: Configure the Event hub data connection
   
   The ’Ingest new data’ wizard opens. 
@@ -237,6 +249,7 @@ The desired result:
   
 <img src="/assets/images/Challenge2-Task2-Pic7.png" width="600">
 
+---
   ##### Task 3: Use the “One-click” UI (User Interfaces) to create a data connection to Azure blob storage
   
   This time, we will ingest data from an Azure Storage account. We will ingest two datasets: </br>
@@ -279,7 +292,8 @@ Repeat the above steps for ingesting data from the New York City container.
   - [Azure Data Explorer data ingestion overview | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/ingest-data-overview)
   - [Use one-click ingestion to ingest data into Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/ingest-data-one-click)
    
-
+---
+---
 ### Challenge 3: Starting with the basics of KQL
 
 In this challenge you’ll write queries in Kusto Query Language (KQL) to explore and gain insights from your data. 
@@ -323,6 +337,7 @@ For the following tasks, connect to the cluster [ADX Microhack Cluster](https://
 
 -->
 
+---
 ##### Task 1: Basic KQL queries - explore the data
   
 In this task, you will see some KQL examples. For this task, we will use the table LogisticsTelemetry, which obtains data from the event hub. </br> 
@@ -394,7 +409,8 @@ LogisticsTelemetry
 
 For the following tasks, we will use the table LogisticsTelemetryHistorical.
 
-#### Task 2: Explore the table and columns
+---
+#### Task 2: Explore the table and columns 🎓
 Write a query to get the schema of the table. 
 
 Expected result:  
@@ -402,7 +418,8 @@ Expected result:
 
 [getschema operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/getschemaoperator)
 
-#### Task 3: Keep the columns of your interest
+---
+#### Task 3: Keep the columns of your interest 🎓
 Write a query to get only specific desired columns: deviceId, enqueuedTime, Temp. Take arbitrary 10 records.
 
 Expected result:</br>
@@ -412,7 +429,8 @@ Expected result:</br>
 
 [Project operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator)
 
-#### Task 4: Filter the output
+---
+#### Task 4: Filter the output 🎓
 Write a query to get only specific desired columns: deviceId, enqueuedTime, Temp. Take arbitrary 10 records from the past 90 days.
 
 Hint 1: “ago” </br>
@@ -420,12 +438,14 @@ Hint 2: In case you see 0 records, remember that operators are sequenced by a pi
 
 [where operator in Kusto query language - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/whereoperator)
 
-#### Task 5: Sorting the results
+---
+#### Task 5: Sorting the results 🎓
 Write a query to get the 5 records which have the highest temperature. Write another query get the 5 records which have the lowest temperature.
 
 [sort operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/sortoperator)
 
-#### Task 6: Reorder, rename, add columns
+---
+#### Task 6: Reorder, rename, add columns 🎓
 Write a query to convert Fahrenheit temperatures to Celsius temperatures. For readability, show the Fahrenheit temperature and the Celsius temperaturesa as the 2 left-most columns. You can use the following formula: 
 C = (F – 32) * (5.0/9.0) <br>
 Take 5 random records from the past week.
@@ -439,13 +459,14 @@ Expected result:</br>
 [project-rename operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectrenameoperator)
 [project-reorder operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectreorderoperator)
 
-
-#### Task 7: Total number of records
+---
+#### Task 7: Total number of records 🎓
 Write a query to find out how many records are in the table. 
 
 [count operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/countoperator)
 
-#### Task 8: Aggregations and string operations
+---
+#### Task 8: Aggregations and string operations 🎓
 Write a query to find out how many records have deviceId starting with 'x'. <br>
 Write another query to find out how many records have deviceId starting with 'x', per device ID (aggregated by deviceId).</br>
 Expected result for the second query:</br>
@@ -455,7 +476,8 @@ Expected result for the second query:</br>
 
 [summarize operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/summarizeoperator)
 
-#### Task 9: Render a chart
+---
+#### Task 9: Render a chart 🎓
 Write a query to find out how many records startswith "x" , per device ID (aggregated by device ID) and render a piechart.
 
 Expected result:</br>
@@ -463,7 +485,8 @@ Expected result:</br>
 
 [render operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/renderoperator?pivots=azuredataexplorer)
 
-#### Task 10: Create bins and visualize time series 
+---
+#### Task 10: Create bins and visualize time series 🎓
 Write a query to show a timechart of the number of records over time. Use 10 minute bins (buckets). Each point on the timechart represent the number of devices on that bucket.
 
 Expected result:</br>
@@ -471,7 +494,8 @@ Expected result:</br>
 
 [bin() - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction)
 
-#### Task 11: Aggregations with time series visualizations
+---
+#### Task 11: Aggregations with time series visualizations 🎓
 Write a query to show a timechart of the **average temperature** over time. Use 30 minute bins (buckets) Each point on the timechart represent the average temperature in that 30 min period.
 Hint: summarize avg(Temp) by bin(enqueuedTime, 30m) 
 
@@ -482,20 +506,27 @@ Expected result:</br>
 
 <!---
 
+---
+---
 #### Challenge 4: Check stats and key metrics of the cluster
-    
+ 
+ ---
   ##### Task 1:  #####
   Go to the Insights blade in the portal (in the ADX cluster page, under monitoring). This blade provides comprehensive monitoring of your clusters by delivering a unified view of your cluster performance, operations, usage, and ingestion operations.
   
+  ---
   ##### Task 2: #####
   Go to the Overview tab: It provides metrics tiles that highlight the availability and overall status of the cluster for quick health assessment. A summary of active Azure Advisor recommendations and resource health status. Charts that show the top CPU and memory consumers and the number of unique users over time.
   
+  ---
   ##### Task 3: #####
   Go to the Key Metrics tab: It shows a unified view of some of the cluster's metrics. They're grouped into general metrics, query-related metrics, ingestion-related metrics, and streaming ingestion-related metrics.
   
+  ---
   ##### Task 4: #####
   Go to The Ingestion tab: It provides details about the ingestion operations, including the result of your ingestion attempts (per DB of per table), the latency of the ingestion process, and more.
   
+  ---
   ##### Task 5: #####
   Go to the Overview tab: You can stop the cluster to save compute costs. You will not lose any data. ADX persists data on blob storage. When you restart your cluster, it will take few minutes to startup and warm up the cache before you can start writing the queries. When the cluster has been stopped, no continuous ingestion will be performed.
   

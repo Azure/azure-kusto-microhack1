@@ -9,7 +9,7 @@ This Microhack is organized into the following 4 challenges:
 Each challenge has a set of tasks that need to be completed in order to move on to the next challenge. It is advisable to complete the challenges and tasks in the prescribed order.
 
 ---
-Earn a digital badge! In order to receive the ADX microhack digital badge, you will need to complete the challenges marked with 🎓. Please submit the KQL queries/commands of these challenges in the following link: [Answer sheet - ADX Microhack 2](https://forms.office.com/r/RkyRWgVN0G)
+Earn a digital badge! In order to receive the ADX microhack digital badge, you will need to complete the challenges marked with 🎓. Please submit the KQL queries/commands of these challenges in the following link: [Answer sheet - ADX Microhack 1](https://forms.office.com/r/Dj1PqLifA6)
 ---
 
 ---
@@ -503,6 +503,9 @@ Expected result:</br>
 <img src="/assets/images/timeseries.png" width="650">
 
 [summarize operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/summarizeoperator)
+
+---
+🎉 Congrats! You've completed the first Microhack. Keep going with [**Microhack 2: Data exploration and visualization using Kusto Query Language (KQL)**](https://github.com/Azure/azure-kusto-microhack2)
 
 <!---
 

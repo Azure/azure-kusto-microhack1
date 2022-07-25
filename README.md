@@ -43,11 +43,10 @@ Sign in to the Azure portal, select the + Create a resource button in the upper-
 - Resource Group: It's recommended to create a new resource group for the microhack's resources. Call it: <youralias>-microhack-RG
 - Cluster name: Must be unique for each participant. Call it: <youralias>microhackadx (cluster name must begin with a letter and contain lowercase alphanumeric characters.)
 - Region: France Central
--	Enable performance update (EngineV3): keep the default (enabled)
 -	Compute specification: For a production system, select the specification that best meets your needs (storage optimized or compute optimized). For this Microhack we can use the Dev (No SLA) SKU. </br>
 With various compute SKU options to choose from, you can optimize costs for the performance and hot-cache requirements for your scenario. If you need the most optimal performance for a high query volume, the ideal SKU should be compute-optimized. If you need to query large volumes of data with relatively lower query load, the storage-optimized SKU can help reduce costs and still provide excellent performance. You can read more about ADX’s SKU types [here](https://docs.microsoft.com/en-us/azure/data-explorer/manage-cluster-choose-sku).
-- Availability zones: keep the default.
-Move to the next tab (“Scale”). Choose how to scale your resource. Select the “Optimized autoscale” option. It’s always recommended to use this option. Optimized Autoscale is a built-in feature that helps clusters perform their best when demand changes. Optimized Autoscale enables your cluster to be performant and cost effective by adding and removing instances based on demand. For this microhack keep the default values (Minimum instance count == 2, Maximum instance count == 3)
+- Availability zones: We can remove the 3 selected Availability zones for this Microhack.
+- Move to the next tab (“Scale”). Choose how to scale your resource. It’s always recommended to use "Optimized Autoscale" option. Optimized Autoscale is a built-in feature that helps clusters perform their best when demand changes. Optimized Autoscale enables your cluster to be performant and cost effective by adding and removing instances based on demand. For this microhack, since we will use Dev/Test (no SLA) SKU,Optimized Autoscale option is disabled. keep the default values (Minimum instance count == 1, Maximum instance count == 1)
 
 You can keep all the other configurations with the default values. 
 Select Review + create to review your cluster details. Then, select Create to provision the cluster. Provisioning typically takes about 10 minutes.
@@ -89,7 +88,7 @@ When the deployment is complete, select Go to resource. You will be redirected t
   
   We can see our cluster and the database that we created.
 To run KQL queries, you must select the database that the query will run on (the scope). <br>
-To select the data base, just click on the database name.<br>
+To select the database, just click on the database name.<br>
 Now – you can write a simple KQL query: print ("hello world"),
 and hit the “Run” button. The query will be executed and its result can be seen in the result grid on the bottom of the page. 
   
@@ -123,11 +122,11 @@ Save the new diagnostic logs settings and metrics.
 
 ---
   ##### Task 1: Use the “One-click” UI (User Interfaces) to create a data connection to Event Hub
-For the best user experience, we will use the Azure Data Explorer Web UI (aka: Kusto web Explorer/KWE). To open it, click on the “Open in Web UI” or just go to [Kusto Web Explorer](https://dataexplorer.azure.com)
+For the best user experience, we will use the Azure Data Explorer Web UI (aka: Kusto web Explorer/KWE). To open it, click on the “Open in Web UI” or just go to [Kusto Web Explorer](https://dataexplorer.azure.com).The web UI opens.
   
   ![Screen capture 1](/assets/images/Challenge2-Task1-Pic1.png)
   
-  The web UI opens. The messages are in a JSON format and they are being sent to your event hub. This is how a sample message looks like:
+   For this Microhack,we use messages that are in JSON format and they are being sent to your event hub. This is how a sample message looks like:
   ```
   {
   "messageProperties": {
@@ -172,7 +171,7 @@ KWE lets us easily connect to Azure Event Hub and build a table which is schema 
   The ’Ingest new data’ wizard opens. 
   
   Destination tab:
-The Cluster and Database fields are auto-populated. Select the ADX cluster and the Database that you created in challenge 1. We haven’t created a table, so use the “Create new table” option. In order to make it easier to query, we recommend using a table name without hyphens, '-'. </br>
+The Cluster and Database fields are auto-populated. Select the ADX cluster and the Database that you created in challenge 1. We haven’t created a table, so use the “New table” option. In order to make it easier to query, we recommend using a table name without hyphens, '-'. </br>
 The table will be named LogisticsTelemetry.
   
   Source tab:
@@ -183,7 +182,7 @@ Set the Source type to “Event Hub”, and specify the event hub details:
 - Data connection name: Set a name for your data connection. We used ‘Database1-adx-microhack-eh’. Data connection connects ADX database to Event hub (or to storage account through Event Grid notifications)
 - Consumer group: you can use the default one
 - Compression: None
-  Event system properties: leave empty. For this Microhack, we are not going to use them. (System properties store properties (meta data) that are set by the Event Hubs service, at the time the event is enqueued. ADX can embed the selected properties into a new column in your destination table.)
+- Event system properties: leave empty. For this Microhack, we are not going to use them. (System properties store properties (meta data) that are set by the Event Hubs service, at the time the event is enqueued. ADX can embed the selected properties into a new column in your destination table.)
   
   <img src="/assets/images/Challenge2-Task2-Pic1.png" width="500">
 
@@ -237,7 +236,7 @@ The desired result:
 
 ![Screen capture 1](/assets/images/Challenge2-Task2-Pic6.png)
   
-  Click on ”Next: Summary” to create this data connection.
+  Click on ”Next: Start ingestion” to create this data connection.
 
   The Azure portal opens on the Event Hubs Instance page, so you can monitor the Event hub’s outgoing messages. In addition, in the One click’s **Continuous ingestion from Event Hub established** window, all steps should be marked with green check marks when establishment finishes successfully. The cards below these steps give you options to explore your data with Quick queries or Monitor the Event Hub connections and data. 
   
@@ -260,7 +259,7 @@ The desired result:
   
   <img src="/assets/images/Challenge2-Task3-Pic1.png" width="450">
   
-  Make sure the cluster and the Database fields are correct. Select **Create new table**
+  Make sure the cluster and the Database fields are correct. Select **New table**
   
   <img src="/assets/images/Challenge2-Task3-Pic2.png" width="450">
   
@@ -286,7 +285,7 @@ The desired result:
   | count 
   ```
 
-Repeat the above steps for ingesting data from the New York City container.
+Repeat the above steps for ingesting data from the New York City taxi container.
 
   **Relevant docs for this challenge:**
   - [Azure Data Explorer data ingestion overview | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/ingest-data-overview)
@@ -388,7 +387,7 @@ LogisticsTelemetry
 | summarize count() by deviceId
 ```
   
-Find out how many records startswith "x", per device ID (aggregate by device ID). Render a timechart
+Find out how many records startswith "x", per device ID (aggregate by device ID). Render a piechart
 
 ```
 LogisticsTelemetry
@@ -413,10 +412,15 @@ For the following tasks, we will use the table LogisticsTelemetryHistorical.
 #### Task 2: Explore the table and columns 🎓
 Write a query to get the schema of the table. 
 
+Hint 1: Observe that new columns like Shock, Temp are extracted from original message.
+
 Expected result:  
 <img src="/assets/images/Schema.png" width="400">
 
+[extend operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator)
+
 [getschema operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/getschemaoperator)
+
 
 ---
 #### Task 3: Keep the columns of your interest 🎓
@@ -443,6 +447,8 @@ Hint 2: In case you see 0 records, remember that operators are sequenced by a pi
 Write a query to get the 5 records which have the highest temperature. Write another query get the 5 records which have the lowest temperature.
 
 [sort operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/sortoperator)
+[top operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator)
+
 
 ---
 #### Task 6: Reorder, rename, add columns 🎓

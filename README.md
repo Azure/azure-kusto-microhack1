@@ -1,6 +1,6 @@
 ## Microhack 1: Cluster Creation and Data Ingestion
 
-This Microhack is organized into the following 4 challenges:
+This Microhack is organized into the following 3 challenges:
 - Challenge 1: Create an ADX cluster
 - Challenge 2: Create integration with Azure services (Event Hub and Storage Account)
 - Challenge 3: Starting with the basics of KQL

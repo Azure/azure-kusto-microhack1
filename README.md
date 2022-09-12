@@ -122,7 +122,7 @@ Save the new diagnostic logs settings and metrics.
 
 ---
   ##### Task 1: Use the “One-click” UI (User Interfaces) to create a data connection to Event Hub
-For the best user experience, we will use the Azure Data Explorer Web UI (aka: Kusto web Explorer/KWE). To open it, click on the “Open in Web UI” or just go to [Kusto Web Explorer](https://dataexplorer.azure.com).The web UI opens.
+For the best user experience, we will use the Azure Data Explorer Web UI (aka: Kusto web Explorer/KWE). To open it, go to "Query" Pane and click on the “Open in Web UI” or just go to [Kusto Web Explorer](https://dataexplorer.azure.com).The web UI opens.
   
   ![Screen capture 1](/assets/images/Challenge2-Task1-Pic1.png)
   
@@ -452,7 +452,7 @@ Write a query to get the 5 records which have the highest temperature. Write ano
 
 ---
 #### Task 6: Reorder, rename, add columns 🎓
-Write a query to convert Fahrenheit temperatures to Celsius temperatures. For readability, show the Fahrenheit temperature and the Celsius temperaturesa as the 2 left-most columns. You can use the following formula: 
+Current temperature is in Fahrenheit.Write a query to convert Fahrenheit temperatures to Celsius temperatures. For readability, show the Fahrenheit temperature and the Celsius temperaturesa as the 2 left-most columns. You can use the following formula: 
 C = (F – 32) * (5.0/9.0) <br>
 Take 5 random records from the past week.
 Hint 1: 'project' operator provides lot more features

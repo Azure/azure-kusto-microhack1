@@ -263,7 +263,9 @@ The desired result:
   
   <img src="/assets/images/Challenge2-Task3-Pic2.png" width="450">
   
-  In the **Link to source**, paste the SAS URL of the blob storage (the proctors will provide this information). Then select one of the **Schema defining file** (all the files in that blob storage have the same schema) and click **Next**
+  In the **Link to source**, paste the SAS URL of the blob storage. The resources deployment section (part of the Microhack prerequisite) included the creation of a storage account named "iotmonitoringsa*****" (under the resource group ADXIoTAnalytics****). To get the SAS URL of the blob container, go to this storage account in the Azure portal. Once you're on the storage account page, go to the "Containers" menu and right-click on the container named "data". Click "Generate SAS". A side pane opens. In the "permissions" dropdown, add "list" along with "read". Click "Generate SAS token and URL" and copy the "Blob SAS URL".
+
+ Go back to the ADX “One-click” UI. Paste the SAS URL and select one of the **Schema defining file** that start with "export_" (not all the files in that blob storage have the same schema. Later we will use the 'yellow_tripdata' file) and click **Next**
   
   ![Screen capture 1](/assets/images/Challenge2-Task3-Pic3.png)
   

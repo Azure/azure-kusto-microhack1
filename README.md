@@ -416,7 +416,7 @@ Write a query to get the schema of the table.
 
 Hint 1: Observe that new columns like Shock, Temp are extracted from original message.
 
-Expected result:  
+Example result:  
 <img src="/assets/images/Schema.png" width="400">
 
 [extend operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator)
@@ -428,7 +428,7 @@ Expected result:
 #### Task 3: Keep the columns of your interest 🎓
 Write a query to get only specific desired columns: deviceId, enqueuedTime, Temp. Take arbitrary 10 records.
 
-Expected result:</br>
+Example result:</br>
 <img src="/assets/images/project.png" width="400">
 
 [project-away operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectawayoperator)
@@ -460,7 +460,7 @@ Take 5 random records from the past week.
 Hint 1: 'project' operator provides lot more features
 Hint 2: We used 5.0 and 9.0, rather than 5 and 9 to ensure these numbers were to the 'real' data type (double-precision floating-point format), rather than 'long' (a signed integer, Int64)
 
-Expected result:</br>
+Example result:</br>
 <img src="/assets/images/temp.png" width="600">
 
 [extend operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator)
@@ -477,7 +477,7 @@ Write a query to find out how many records are in the table.
 #### Task 8: Aggregations and string operations 🎓
 Write a query to find out how many records have deviceId starting with 'x'. <br>
 Write another query to find out how many records have deviceId starting with 'x', per device ID (aggregated by deviceId).</br>
-Expected result for the second query:</br>
+Example result for the second query:</br>
 <img src="/assets/images/count_by.png" width="250">
 
 [String operators - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/datatypes-string-operators)
@@ -488,7 +488,7 @@ Expected result for the second query:</br>
 #### Task 9: Render a chart 🎓
 Write a query to find out how many records startswith "x" , per device ID (aggregated by device ID) and render a piechart.
 
-Expected result:</br>
+Example result:</br>
 <img src="/assets/images/pie.png" width="500">
 
 [render operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/renderoperator?pivots=azuredataexplorer)
@@ -497,7 +497,7 @@ Expected result:</br>
 #### Task 10: Create bins and visualize time series 🎓
 Write a query to show a timechart of the number of records over time. Use 10 minute bins (buckets). Each point on the timechart represent the number of devices on that bucket.
 
-Expected result:</br>
+Example result:</br>
 <img src="/assets/images/chart.png" width="650">
 
 [bin() - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction)
@@ -507,7 +507,7 @@ Expected result:</br>
 Write a query to show a timechart of the **average temperature** over time. Use 30 minute bins (buckets) Each point on the timechart represent the average temperature in that 30 min period.
 Hint: summarize avg(Temp) by bin(enqueuedTime, 30m) 
 
-Expected result:</br>
+Example result:</br>
 <img src="/assets/images/timeseries.png" width="650">
 
 [summarize operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/summarizeoperator)

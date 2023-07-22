@@ -9,7 +9,7 @@ This Microhack is organized into the following 3 challenges:
 Each challenge has a set of tasks that need to be completed in order to move on to the next challenge. It is advisable to complete the challenges and tasks in the prescribed order.
 
 ---
-Earn a digital badge! In order to receive the ADX microhack digital badge, you will need to complete the challenges marked with 🎓. Please submit the KQL queries/commands of these challenges in the following link: [Answer sheet - ADX Microhack 1](https://forms.office.com/r/Dj1PqLifA6)
+Earn a digital badge! In order to receive the ADX microhack digital badge, you will need to complete the challenges marked with ✅. Please submit the KQL queries/commands of these challenges in the following link: [Answer sheet - ADX Microhack 1](https://forms.office.com/r/Dj1PqLifA6)
 ---
 
 ---
@@ -30,14 +30,16 @@ Sign in to the Azure portal, select the + Create a resource button in the upper-
 
 <img src="/assets/images/Challenge1-Task1-Pic1.png" width="400">
   
-- Search for Azure Data Explorer. Under Azure Data Explorer, select Create.
-
-<img src="/assets/images/Challenge1-Task1-Pic2.png" width="450">
-<img src="/assets/images/Challenge1-Task1-Pic3.png" width="450">
+- Search for Azure Data Explorer. 
+  
+  <img src="/assets/images/Challenge1-Task1-Pic2.png" width="450">
+- Under Azure Data Explorer, select Create.
+  
+  <img src="/assets/images/Challenge1-Task1-Pic3.png" width="450">
 
 - Fill out the basic cluster details with the following information.
 
-![Screen capture 1](/assets/images/Challenge1-Task1-Pic4.png)
+  ![Screen capture 1](/assets/images/Challenge1-Task1-Pic4.png)
 
 - Subscription: Use your own subscription
 - Resource Group: It's recommended to create a new resource group for the microhack's resources. Call it: <youralias>-microhack-RG
@@ -63,7 +65,7 @@ When the deployment is complete, select Go to resource. You will be redirected t
 
 - Fill out the form with the following information.
   
-<img src="/assets/images/Challenge1-Task2-Pic2.png" width="450">
+  <img src="/assets/images/Challenge1-Task2-Pic2.png" width="450">
   
   | Setting       | Suggested Value   | Field Description                                                             |
   | ------------- | ----------------- | ----------------------------------------------------------------------------- |
@@ -122,11 +124,11 @@ Save the new diagnostic logs settings and metrics.
 
 ---
   ##### Task 1: Use the “One-click” UI (User Interfaces) to create a data connection to Event Hub
-For the best user experience, we will use the Azure Data Explorer Web UI (aka: Kusto web Explorer/KWE). To open it, go to "Query" Pane and click on the “Open in Web UI” or just go to [Kusto Web Explorer](https://dataexplorer.azure.com).The web UI opens.
+For the best user experience, we will use the Azure Data Explorer Web UI (aka: Kusto web Explorer/KWE). To open it, go to "Query" Pane and click on the “Open in Web UI” or just go to [Kusto Web Explorer](https://dataexplorer.azure.com). The web UI opens.
   
   ![Screen capture 1](/assets/images/Challenge2-Task1-Pic1.png)
   
-   For this Microhack,we use messages that are in JSON format and they are being sent to your event hub. This is how a sample message looks like:
+   For this Microhack, we use messages that are in JSON format and they are being sent to your event hub. This is how a sample message looks like:
   ```
   {
   "messageProperties": {
@@ -198,7 +200,7 @@ Although the dynamic type appears JSON-like, it can hold values that the JSON mo
 
 The 'Nested levels' field expands levels of nested data in dynamic type columns into separate columns. Although the raw event’s JSON format has nestedness of 2 levels, for this microhack we will use 1 level and see later how to leverage the powerful update policy capability of ADX to break these dynamic columns.
 
-This is an example of the telemetry JSON (that is part of a bigger JSON that is being sent from the evet hub):
+This is an example of the telemetry JSON (that is part of a bigger JSON that is being sent from the event hub):
 ```
 {"Location":{"alt":"252.71910000000003","lon":-93.2176,"lat":41.7911},"LostTags":4,"Light":"49115.368835522917","Temp":"32.93780098864795","TotalTags":186,"Status":"Offline","TransportationMode":"Land","BatteryLife":-5,"Tilt":"-52.64112596209344","Humidity":"74.018336518734131","Shock":"6.696957328744805","Pressure":"603.69265616418761","ActiveTags":170}
 ```
@@ -411,7 +413,7 @@ LogisticsTelemetry
 For the following tasks, we will use the table LogisticsTelemetryHistorical.
 
 ---
-#### Task 2: Explore the table and columns 🎓
+#### Task 2: Explore the table and columns ✅
 Write a query to get the schema of the table. 
 
 Hint 1: Observe that new columns like Shock, Temp are extracted from original message.
@@ -425,7 +427,7 @@ Example result:
 
 
 ---
-#### Task 3: Keep the columns of your interest 🎓
+#### Task 3: Keep the columns of your interest ✅
 Write a query to get only specific desired columns: deviceId, enqueuedTime, Temp. Take arbitrary 10 records.
 
 Example result:</br>
@@ -436,7 +438,7 @@ Example result:</br>
 [Project operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator)
 
 ---
-#### Task 4: Filter the output 🎓
+#### Task 4: Filter the output ✅
 Write a query to get only specific desired columns: deviceId, enqueuedTime, Temp. Take arbitrary 10 records from the past 90 days.
 
 Hint 1: “ago” </br>
@@ -445,7 +447,7 @@ Hint 2: In case you see 0 records, remember that operators are sequenced by a pi
 [where operator in Kusto query language - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/whereoperator)
 
 ---
-#### Task 5: Sorting the results 🎓
+#### Task 5: Sorting the results ✅
 Write a query to get the 5 records which have the highest temperature. Write another query get the 5 records which have the lowest temperature.
 
 [sort operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/sortoperator)
@@ -453,7 +455,7 @@ Write a query to get the 5 records which have the highest temperature. Write ano
 
 
 ---
-#### Task 6: Reorder, rename, add columns 🎓
+#### Task 6: Reorder, rename, add columns ✅
 Current temperature is in Fahrenheit.Write a query to convert Fahrenheit temperatures to Celsius temperatures. For readability, show the Fahrenheit temperature and the Celsius temperaturesa as the 2 left-most columns. You can use the following formula: 
 C = (F – 32) * (5.0/9.0) <br>
 Take 5 random records from the past week.
@@ -468,13 +470,13 @@ Example result:</br>
 [project-reorder operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectreorderoperator)
 
 ---
-#### Task 7: Total number of records 🎓
+#### Task 7: Total number of records ✅
 Write a query to find out how many records are in the table. 
 
 [count operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/countoperator)
 
 ---
-#### Task 8: Aggregations and string operations 🎓
+#### Task 8: Aggregations and string operations ✅
 Write a query to find out how many records have deviceId starting with 'x'. <br>
 Write another query to find out how many records have deviceId starting with 'x', per device ID (aggregated by deviceId).</br>
 Example result for the second query:</br>
@@ -485,7 +487,7 @@ Example result for the second query:</br>
 [summarize operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/summarizeoperator)
 
 ---
-#### Task 9: Render a chart 🎓
+#### Task 9: Render a chart ✅
 Write a query to find out how many records startswith "x" , per device ID (aggregated by device ID) and render a piechart.
 
 Example result:</br>
@@ -494,7 +496,7 @@ Example result:</br>
 [render operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/renderoperator?pivots=azuredataexplorer)
 
 ---
-#### Task 10: Create bins and visualize time series 🎓
+#### Task 10: Create bins and visualize time series ✅
 Write a query to show a timechart of the number of records over time. Use 10 minute bins (buckets). Each point on the timechart represent the number of devices on that bucket.
 
 Example result:</br>
@@ -503,7 +505,7 @@ Example result:</br>
 [bin() - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction)
 
 ---
-#### Task 11: Aggregations with time series visualizations 🎓
+#### Task 11: Aggregations with time series visualizations ✅
 Write a query to show a timechart of the **average temperature** over time. Use 30 minute bins (buckets) Each point on the timechart represent the average temperature in that 30 min period.
 Hint: summarize avg(Temp) by bin(enqueuedTime, 30m) 
 

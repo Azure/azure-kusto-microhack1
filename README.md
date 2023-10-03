@@ -511,7 +511,7 @@ Write a query to get only specific desired columns: `deviceId`, `enqueuedTime`, 
 
 Example result:
 
-![Project](/assets/images/Project.png)
+![Project](/assets/images/project.png)
 
 [project-away operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectawayoperator)
 
@@ -551,7 +551,7 @@ Hint 2: We used 5.0 and 9.0, rather than 5 and 9 to ensure these numbers were re
 
 Example result:
 
-![Temp](/assets/images/Temp.png)
+![Temp](/assets/images/temp.png)
 
 [extend operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator)
 [project-rename operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectrenameoperator)
@@ -589,7 +589,7 @@ Write a query to find out how many records start with "x", per device ID (aggreg
 
 Example result:
 
-![Pie Chart](/assets/images/Pie.png)
+![Pie Chart](/assets/images/pie.png)
 
 [render operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/renderoperator?pivots=azuredataexplorer)
 

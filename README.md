@@ -1,4 +1,4 @@
-## Microhack 1: Cluster Creation and Data Ingestion
+# Microhack 1: Cluster Creation and Data Ingestion
 
 This Microhack is organized into the following 3 challenges:
 
@@ -15,14 +15,14 @@ Each challenge has a set of tasks that need to be completed in order to move on 
 
 ---
 
-#### Challenge 1: Create an ADX cluster
+## Challenge 1: Create an ADX Cluster
 
 To use Azure Data Explorer (ADX), you first have to create an ADX cluster, and create one or more databases in that cluster. Each database has tables. Then you can ingest data into a database so that you can run queries against it.
 
 In this challenge, you will design an ADX based architecture, create an ADX cluster and database.
 In addition, you will get familiarized with two tools that enable you to connect to your Azure Data Explorer and run queries.
 
-**Expected Learning Outcomes:**
+### Expected Learning Outcomes
 
 - Deploy ADX cluster from Azure Portal
 - Use ADX clients such as Kusto Web Explorer and Kusto Explorer
@@ -30,113 +30,127 @@ In addition, you will get familiarized with two tools that enable you to connect
 
 ---
 
-##### Task 1: Create an ADX cluster resource
+### Task 1: Create an ADX cluster resource
 
 Sign in to the Azure portal, select the + Create a resource button in the upper-left corner of the portal’s main page.
 
-<img src="/assets/images/Challenge1-Task1-Pic1.png" width="400">
-  
-- Search for Azure Data Explorer. Under Azure Data Explorer, select Create.
+![Create a resource](/assets/images/Challenge1-Task1-Pic1.png)
 
-<img src="/assets/images/Challenge1-Task1-Pic2.png" width="450">
-<img src="/assets/images/Challenge1-Task1-Pic3.png" width="450">
+Search for Azure Data Explorer. Under Azure Data Explorer, select Create.
 
-- Fill out the basic cluster details with the following information.
+![Select Azure Data Explorer](/assets/images/Challenge1-Task1-Pic2.png)
 
-![Screen capture 1](/assets/images/Challenge1-Task1-Pic4.png)
+![Select Azure Data Explorer](/assets/images/Challenge1-Task1-Pic3.png)
+
+Fill out the basic cluster details with the following information.
+
+![Fill out Details](/assets/images/Challenge1-Task1-Pic4.png)
 
 - Subscription: Use your own subscription
-- Resource Group: It's recommended to create a new resource group for the microhack's resources. Call it: <youralias>-microhack-RG
-- Cluster name: Must be unique for each participant. Call it: <youralias>microhackadx (cluster name must begin with a letter and contain lowercase alphanumeric characters.)
-- Region: France Central
-- Compute specification: For a production system, select the specification that best meets your needs (storage optimized or compute optimized). For this Microhack we can use the Dev (No SLA) SKU. </br>
+- Resource Group: It's recommended to create a new resource group for the microhack's resources. Call it: `[youralias]-microhack-RG`
+- Cluster name: Must be unique for each participant. Call it: `[youralias]microhackadx` (the cluster name must begin with a letter and contain lowercase alphanumeric characters)
+- Region: Your preferred region (we chose `Australia East`)
+- Compute specification: For a production system, select the specification that best meets your needs (storage optimized or compute optimized). For this Microhack we can use the `Dev (No SLA) SKU`.
+
   With various compute SKU options to choose from, you can optimize costs for the performance and hot-cache requirements for your scenario. If you need the most optimal performance for a high query volume, the ideal SKU should be compute-optimized. If you need to query large volumes of data with relatively lower query load, the storage-optimized SKU can help reduce costs and still provide excellent performance. You can read more about ADX’s SKU types [here](https://docs.microsoft.com/en-us/azure/data-explorer/manage-cluster-choose-sku).
+
 - Availability zones: We can remove the 3 selected Availability zones for this Microhack.
-- Move to the next tab (“Scale”). Choose how to scale your resource. It’s always recommended to use "Optimized Autoscale" option. Optimized Autoscale is a built-in feature that helps clusters perform their best when demand changes. Optimized Autoscale enables your cluster to be performant and cost effective by adding and removing instances based on demand. For this microhack, since we will use Dev/Test (no SLA) SKU,Optimized Autoscale option is disabled. keep the default values (Minimum instance count == 1, Maximum instance count == 1)
+- Move to the next tab ("Scale"). Choose how to scale your resource. It’s always recommended to use "Optimized Autoscale" option. Optimized Autoscale is a built-in feature that helps clusters perform their best when demand changes. Optimized Autoscale enables your cluster to be performant and cost effective by adding and removing instances based on demand. For this microhack, since we will use `Dev/Test (no SLA) SKU`, Optimized Autoscale option is disabled. Keep the default values (Minimum instance count == 1, Maximum instance count == 1)
 
 You can keep all the other configurations with the default values.
 Select Review + create to review your cluster details. Then, select Create to provision the cluster. Provisioning typically takes about 10 minutes.
+
 Creating an ADX cluster takes in average 10-15 minutes.
 
-When the deployment is complete, select Go to resource. You will be redirected to the ADX cluster resource page. On the top of the Overview page, you can see the basic details of the cluster, like: the Subscription, the state (running) and the URI.
+When the deployment is complete, select **Go to resource**. You will be redirected to the ADX cluster resource page. On the top of the Overview page, you can see the basic details of the cluster, like: the Subscription, the state (running) and the URI.
 
 ---
 
-##### Task 2: Create a Database
+### Task 2: Create a Database
 
-- You're now ready for the second step in the process: database creation.
+- You're now ready for the second step in the process: Database Creation.
 - On the Overview tab, select Create database. Alternatively, you can go to the “Databases” blade.
 
-  ![Screen capture 1](/assets/images/Challenge1-Task2-Pic1.png)
+  ![Overview Tab](/assets/images/Challenge1-Task2-Pic1.png)
 
 - Fill out the form with the following information.
 
-<img src="/assets/images/Challenge1-Task2-Pic2.png" width="450">
-  
-  | Setting       | Suggested Value   | Field Description                                                             |
-  | ------------- | ----------------- | ----------------------------------------------------------------------------- |
-  | Admin         | Default selected  | The admin field is disabled. New admins can be added after database creation. |
-  | Database Name | IoTAnalytics | The database name must be unique within the cluster.                          |
-  | Retention period | 365	| The time span (in days) for which it's guaranteed that the data is kept available to query. The time span is measured from the time that data is ingested. This is the longer-term storage (in reliable storage) retention. |
-  | Cache period	| 31	| The time span (in days) for which to keep frequently queried data available in SSD storage or RAM of the cluster’s VM, rather than in longer-term storage. Azure Data Explorer stores all its ingested data in reliable storage (most commonly Azure Blob Storage), away from its actual processing (such as Azure Compute) nodes. To speed up queries on that data, Azure Data Explorer caches it, or parts of it, on its processing nodes, SSD, or even in RAM. The best query performance is achieved when all ingested data is cached. Sometimes, certain data doesn't justify the cost of keeping it "warm" in local SSD storage. For example, many teams consider that rarely accessed older log records are of lesser importance. They prefer to have reduced performance when querying this data, rather than pay to keep it warm all the time. By increasing the cache policy, more VMs will be required to store data on their SSD/RAM. For Azure Data Explorer cluster, compute cost (VMs) is the most significant part of cluster cost as compared to storage and networking. |
+  ![Database Creation](/assets/images/Challenge1-Task2-Pic2.png)
 
-- Select Create to create the database. Creation typically takes less than a minute. When the process is complete, you're back on the cluster Overview blade. You can see the database that you have created from on the Databases blade.
+  | Setting          | Suggested Value  | Field Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+  | ---------------- | ---------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+  | Admin            | Default selected | The admin field is disabled. New admins can be added after database creation.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+  | Database Name    | IoTAnalytics     | The database name must be unique within the cluster.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
+  | Retention period | 365              | The time span (in days) for which it's guaranteed that the data is kept available to query. The time span is measured from the time that data is ingested. This is the longer-term storage (in reliable storage) retention.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+  | Cache period     | 31               | The time span (in days) for which to keep frequently queried data available in SSD storage or RAM of the cluster’s VM, rather than in longer-term storage. Azure Data Explorer stores all its ingested data in reliable storage (most commonly Azure Blob Storage), away from its actual processing (such as Azure Compute) nodes. To speed up queries on that data, Azure Data Explorer caches it, or parts of it, on its processing nodes, SSD, or even in RAM. The best query performance is achieved when all ingested data is cached. Sometimes, certain data doesn't justify the cost of keeping it "warm" in local SSD storage. For example, many teams consider that rarely accessed older log records are of lesser importance. They prefer to have reduced performance when querying this data, rather than pay to keep it warm all the time. By increasing the cache policy, more VMs will be required to store data on their SSD/RAM. For Azure Data Explorer cluster, compute cost (VMs) is the most significant part of cluster cost as compared to storage and networking. |
 
-  ![Screen capture 1](/assets/images/Challenge1-Task2-Pic3.png)
+- Select **Create** to create the database. Creation typically takes less than a minute. When the process is complete, you're back on the cluster Overview blade. You can see the database that you have created from on the Databases blade.
+
+  ![Databases Blade](/assets/images/Challenge1-Task2-Pic3.png)
 
 ---
 
-##### Task 3: Write your first Kusto Query Language (KQL) query
+### Task 3: Write your first Kusto Query Language (KQL) query
 
-What is a Kusto query?
-Azure Data Explorer provides a web experience that enables you to connect to your Azure Data Explorer clusters and write and run Kusto Query Language queries. The web experience is available in the Azure portal and as a stand-alone web application, the Azure Data Explorer Web UI, that we will use later.<br>
-A Kusto query is a read-only request to process data and return results. The request is stated in plain text that's easy to read. A Kusto query has one or more query statements and returns data in a tabular or graph format.<br>
-In the next challenges, we'll ingest data to the cluster, and then learn the most important concepts in KQL and write interesting queries. In this task, you will write a few basic queries to get an understanding of the environment.<br>
+#### What is a Kusto query?
+
+Azure Data Explorer provides a web experience that enables you to connect to your Azure Data Explorer clusters and write and run Kusto Query Language queries. The web experience is available in the Azure portal and as a stand-alone web application, the Azure Data Explorer Web UI, that we will use later.
+
+A Kusto query is a read-only request to process data and return results. The request is stated in plain text that's easy to read. A Kusto query has one or more query statements and returns data in a tabular or graph format.
+
+In the next challenges, we'll ingest data to the cluster, and then learn the most important concepts in KQL and write interesting queries. In this task, you will write a few basic queries to get an understanding of the environment.
+
 To start, go to the “Query” blade. In this example, you'll use the Azure Data Explorer web interface as a query editor (Kusto Query Language can also be used in Azure Monitor Logs, Azure Sentinel, and other services that are built on-top of Azure Data Explorer.)
 
-![Screen capture 1](/assets/images/Challenge1-Task3-Pic1.png)
+![Query Blade](/assets/images/Challenge1-Task3-Pic1.png)
 
 We can see our cluster and the database that we created.
-To run KQL queries, you must select the database that the query will run on (the scope). <br>
-To select the database, just click on the database name.<br>
-Now – you can write a simple KQL query: `print("hello world")` and hit the “Run” button. The query will be executed and its result can be seen in the result grid on the bottom of the page.
+To run KQL queries, you must select the database that the query will run on (the scope).
 
-![Screen capture 1](/assets/images/Challenge1-Task3-Pic2.png)
+To select the database, just click on the database name.
+
+Now - you can write a simple KQL query: `print("hello world")` and hit the **Run** button. The query will be executed and its result can be seen in the result grid on the bottom right of the page.
+
+![Query Blade Overview](/assets/images/Challenge1-Task3-Pic2.png)
 
 Windows users can also download [Kusto Explorer](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/tools/kusto-explorer), a desktop client to run queries and benefit from advanced features available in the client.
 
 ---
 
-##### Task 4: Enable Diagnostic Logs
+### Task 4: Enable Diagnostic Logs
 
 Azure Monitor diagnostic logs provide monitoring data about the operation of Azure resources. ADX uses diagnostic logs for insights on ingestion, commands, queries, and tables usage. You can export operation logs to Azure Storage, Event Hub, or Log Analytics.
+
 Diagnostic logs are disabled by default. To enable diagnostic logs, go to your cluster page in the portal. Under Monitoring, select Diagnostic settings.
 
-![Screen capture 1](/assets/images/Challenge1-Task4-Pic1.png)
+![Enable Diagnostic Settings](/assets/images/Challenge1-Task4-Pic1.png)
 
-Select Add diagnostic setting. In the Diagnostic settings window. Enter a Diagnostic setting name as per your preference.
+Select **Add diagnostic setting**. In the Diagnostic settings window. Enter a Diagnostic setting name as per your preference.
+
 Select all the log categories and metrics (SucceededIngestion, FailedIngestion, IngestionBatching, Command, or Query, TableUsageStatistics, TableDetails and Journal).
-For this microhack, select the Destination details to be a Log Analytics workspace and select your own workspace or create a new one.
+
+For this microhack, select the Destination details to be a Log Analytics workspace, then select your own workspace or create a new one.
+
 Save the new diagnostic logs settings and metrics.
 
 ---
 
 ---
 
-#### Challenge 2: Create integration with Azure services (Event Hub and Storage Account)
+## Challenge 2: Create integration with Azure services (Event Hub and Storage Account)
 
 Data ingestion to ADX is the process used to load data records from one or more sources into a table in your ADX cluster. Once ingested, the data becomes available to query.
 
 ADX supports several ingestion methods. These methods include ingestion tools, connectors and plugins, managed pipelines, programmatic ingestion using SDKs, and direct access to ingestion.
 
-**Expected Learning Outcomes:**
+### Expected Learning Outcomes
 
 - Create continuous ingestion from Azure Event Hub (a managed pipeline)
 - Create one-time ingestion from Azure Blob Storage to your ADX cluster.
 
 ---
 
-##### Task 1: Use the “One-click” UI (User Interface) to create a data connection to an Azure Event Hub
+### Task 1: Use the "One-click" UI (User Interface) to create a data connection to an Azure Event Hub
 
 For the best user experience, we will use the Azure Data Explorer Web UI (aka: Kusto web Explorer/KWE). To open it, go to "Query" Pane and click on the “Open in Web UI” or just go to [Kusto Web Explorer](https://dataexplorer.azure.com).The web UI opens.
 
@@ -182,15 +196,15 @@ KWE lets us easily connect to Azure Event Hub and build a table with its schema 
 
 With the "Try new Get Data" layout enabled on the top menu bar, select the "Get data" segment to get started.
 
-<img src="/assets/images/Challenge2-Task1-Pic2.png" width="500">
+![Get Data](/assets/images/Challenge2-Task1-Pic2.png)
 
 Now simply select the Event Hubs option to begin ingesting data continously from an Event Hub.
 
-<img src="/assets/images/Challenge2-Task1-Pic3.png" width="500">
+![Select Event Hub Data Source](/assets/images/Challenge2-Task1-Pic3.png)
 
 ---
 
-##### Task 2: Configure the Event Hub Data Connection
+### Task 2: Configure the Event Hub Data Connection
 
 The 'Get data' wizard progresses to the next step.
 
@@ -211,7 +225,7 @@ In the Configure tab - specify the Event Hub details:
 - Event system properties: Leave empty. For this Microhack, we are not going to use them. System properties store properties (metadata) that are set by the Event Hub service at the time the event is enqueued. ADX can embed the selected properties into a new column in your destination table.
 - Event retrieval start data: Leave this empty too. For this Microhack, we are not going to use this feature. It allows you to specify the time from which to start ingesting data from the Event Hub.
 
-    <img src="/assets/images/Challenge2-Task2-Pic1.png" width="500">
+  ![Ingest from Event Hub](/assets/images/Challenge2-Task2-Pic1.png)
 
   Click on "Next"
 
@@ -245,24 +259,24 @@ This is an example of the telemetry JSON (that is part of a bigger JSON that is 
 }
 ```
 
-![Screen capture 1](/assets/images/Challenge2-Task2-Pic2.png)
+![JSON in Dynamic Column](/assets/images/Challenge2-Task2-Pic2.png)
 
 If you set the Nested levels to 2, ADX will “break” the JSON to independent fields. This is useful to know, but in general IoT devices are subject to schema changes and if Contoso attaches additional sensors, the entire table schema may need to be updated. It could break existing queries and impact downstream consumers of this data.
 
-![Screen capture 1](/assets/images/Challenge2-Task2-Pic2-2.png)
+![Nesting Level of Two](/assets/images/Challenge2-Task2-Pic2-2.png)
 
 For this microhack, we want to learn how ADX deals with dynamic fields, so we will keep the Nested levels as 1.
 
-  <img src="/assets/images/Challenge2-Task2-Pic3.png" width="450">
+![Inspect Event Hub Data](/assets/images/Challenge2-Task2-Pic3.png)
 
-![Screen capture 1](/assets/images/Challenge2-Task2-Pic4.png)
+![Event Hub Advanced Properties](/assets/images/Challenge2-Task2-Pic4.png)
 
 Open the command viewer. You can see the control commands that were automatically generated.
 In contrast to Kusto queries, control commands are requests to Kusto to process or modify data or metadata. Control commands are distinguished from queries by having the first character in the text of the command be the dot (.) character (which can't start a query). Not all control commands modify data or metadata. The large class of commands that start with `.show`, are used to display metadata or data. For example, the `.show tables` command returns a list of all tables in the current database.
 
 Review the control commands that were generated by One-Click.
 
-![Screen capture 1](/assets/images/Challenge2-Task2-Pic5.png)
+![Command Viewer](/assets/images/Challenge2-Task2-Pic5.png)
 
 You can see the:
 `.create table table_name` command, which creates a new empty table.
@@ -278,13 +292,13 @@ The table mapping (data mapping) command: Data mappings are used during ingestio
 
 The desired result:
 
-![Screen capture 1](/assets/images/Challenge2-Task2-Pic6.png)
+![Preview Event Hub Data Ingestion](/assets/images/Challenge2-Task2-Pic6.png)
 
 Click on "Finish" to create this data connection and begin ingestion.
 
 At the end of this process all steps should be marked with green check marks, indicating the table has been created, the mapping schema has been created, and the data connection has been successfully established. The cards below these steps give you options to explore your data.
 
-<img src="/assets/images/Challenge2-Task2-Pic7.png" width="600">
+![Explore Event Hub Data](/assets/images/Challenge2-Task2-Pic7.png)
 
 Use the "Explore" link (under "What can you do with the data?"). Review the query and the data.
 
@@ -294,11 +308,11 @@ Run the query by either selecting the Run button above the query window or selec
 
 For additional context, you will notice that a new Event Hub Data Connection is created on the ADX Database resource in the Azure Portal. We can use this to monitor the ingestion status and to troubleshoot any issues.
 
-<img src="/assets/images/Challenge2-Task2-Pic8.png" width="600">
+![Event Hub Data Connection](/assets/images/Challenge2-Task2-Pic8.png)
 
 ---
 
-##### Task 3: Use the “One-click” UI (User Interfaces) to create a data connection to Azure Blob Storage
+### Task 3: Use the "One-click" UI (User Interfaces) to create a data connection to Azure Blob Storage
 
 This time, we will ingest data from an Azure Storage account. We will ingest two datasets:
 
@@ -307,34 +321,34 @@ This time, we will ingest data from an Azure Storage account. We will ingest two
 
 With the "Try new Get Data" layout enabled on the top menu bar, select the "Get data" segment to get started.
 
-<img src="/assets/images/Challenge2-Task3-Pic1.png" width="500">
+![Get Data](/assets/images/Challenge2-Task3-Pic1.png)
 
 Select the Azure Storage option to begin ingesting data from a Storage Account.
 
-<img src="/assets/images/Challenge2-Task3-Pic1-1.png" width="500">
-  
-  Make sure the cluster and the Database fields are correct. Select **New table** and name it `LogisticsTelemetryHistorical`. On the right, select **Add URI** and paste the SAS URL of the blob container. Alternatively, you can use the **Select container** option to choose the location of the historical data container manually.
-  
-  <img src="/assets/images/Challenge2-Task3-Pic2.png" width="450">
-  
-  **Where do I find this information?**
-  The resource deployment part (on the Microhack's prerequisites) included the creation of a Storage Account named "iotmonitoringsa*****" (under the resource group ADXIoTAnalytics****). To get the SAS URL of the blob container, go to this storage account in the Azure portal. Once you're on the storage account page, go to the "Containers" menu and right-click on the container named "data". Click "Generate SAS". A side pane opens. In the "permissions" dropdown, add "list" along with "read". Click "Generate SAS token and URL" and copy the "Blob SAS URL".
+![Select Azure Storage](/assets/images/Challenge2-Task3-Pic1-1.png)
 
-Go back to the ADX “One-click” UI. Paste the SAS URL and select one of the **Schema defining file** that start with "export\_" (not all the files in that blob storage have the same schema. Later we will use the 'yellow_tripdata' file).
+Make sure the cluster and the Database fields are correct. Select **New table** and name it `LogisticsTelemetryHistorical`. On the right, select **Add URI** and paste the SAS URL of the blob container. Alternatively, you can use the **Select container** option to choose the location of the historical data container manually.
+
+![Add URI](/assets/images/Challenge2-Task3-Pic2.png)
+
+**Where do I find this information?**
+The resource deployment part (on the Microhack's prerequisites) included the creation of a Storage Account named "iotmonitoringsa**\***" (under the resource group ADXIoTAnalytics\*\*\*\*). To get the SAS URL of the blob container, go to this storage account in the Azure portal. Once you're on the storage account page, go to the "Containers" menu and right-click on the container named "data". Click "Generate SAS". A side pane opens. In the "permissions" dropdown, add "list" along with "read". Click "Generate SAS token and URL" and copy the "Blob SAS URL".
+
+Go back to the ADX "One-click" UI. Paste the SAS URL and select one of the **Schema defining file** that start with "export\_" (not all the files in that blob storage have the same schema. Later we will use the 'yellow_tripdata' file).
 
 Make sure you use the **JSON Data format** and click **Finish**
 
-![Screen capture 1](/assets/images/Challenge2-Task3-Pic3.png)
+![Preview Blob Ingestion](/assets/images/Challenge2-Task3-Pic3.png)
 
 Wait for the ingestion to be completed. For production modes, you could use Azure Event Grid for continuous blob ingestion. We won't use that option in this microhack.
 
-   <img src="/assets/images/ingestion-completed.png" width="520">
-  
+![Successful Blob Ingestion](/assets/images/ingestion-completed.png)
+
   <!--- Event Grid Continuous ingestion images
 ![Screen capture 1](/assets/images/Challenge2-Task3-Pic6.png)
  ![Screen capture 1](/assets/images/Challenge2-Task3-Pic7.png) -->
-  
-  Verify that data was ingested to the table
+
+Verify that data was ingested to the table
 
 ```Kusto
 LogisticsTelemetryHistorical
@@ -352,19 +366,21 @@ Repeat the above steps for ingesting data from the New York City Taxi dataset.
 
 ---
 
-### Challenge 3: Starting with the basics of KQL
+## Challenge 3: Starting with the basics of KQL
 
 In this challenge you will write queries in the Kusto Query Language (KQL) to explore and gain insights from your data.
 
-**Expected Learning Outcomes:**
+### Expected Learning Outcomes
 
 - Know how to write queries with KQL.
 - Use KQL to explore data by using the most common operators.
 
-**What is a Kusto query?**
+### What is a Kusto query?
+
 A Kusto query is a read-only request to process data and return results. The request is stated in plain text that's easy to read, author, and automate. A Kusto query has one or more query statements and returns data in a tabular or graph format.
 
-**What is a tabular statement?**
+### What is a tabular statement?
+
 The most common kind of query statement is a tabular expression statement. Both its input and its output consist of tables or tabular datasets.
 
 Tabular statements contain zero or more operators. Each operator starts with a tabular input and returns a tabular output. Operators are sequenced by a pipe (`|`). Data flows, or is "piped", from one operator to the next. The data is filtered or manipulated at each step and then fed into the following step.
@@ -388,7 +404,7 @@ References:
 - [KQL cheat sheets](https://github.com/marcusbakker/KQL/blob/master/kql_cheat_sheet.pdf)
 
 <!--
-#### Task 0: Connect to the cluster
+### Task 0: Connect to the cluster
 
 For the following tasks, connect to the cluster [ADX Microhack Cluster](https://adxmicrohackcluster.eastus.kusto.windows.net/)
 
@@ -400,7 +416,7 @@ For the following tasks, connect to the cluster [ADX Microhack Cluster](https://
 
 ---
 
-##### Task 1: Basic KQL queries - explore the data
+### Task 1: Basic KQL queries - explore the data
 
 In this task, you will see some KQL examples. For this task, we will use the table `LogisticsTelemetry`, which obtains data from the Event Hub. </br>
 Execute the queries and view the results. KQL queries can be used to filter data and return specific information. Now, you'll learn how to choose specific rows of the data. The where operator filters results that satisfy a certain condition.
@@ -473,14 +489,15 @@ For the following tasks, we will use the table `LogisticsTelemetryHistorical`.
 
 ---
 
-#### Task 2: Explore the table and columns 🎓
+### Task 2: Explore the table and columns 🎓
 
 Write a query to get the schema of the table.
 
 Hint 1: Observe that new columns like `Shock`, `Temp` are extracted from the original message.
 
-Example result:  
-<img src="/assets/images/Schema.png" width="400">
+Example result:
+
+![Schema](/assets/images/Schema.png)
 
 [extend operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator)
 
@@ -488,12 +505,13 @@ Example result:
 
 ---
 
-#### Task 3: Keep the columns of your interest 🎓
+### Task 3: Keep the columns of your interest 🎓
 
 Write a query to get only specific desired columns: `deviceId`, `enqueuedTime`, `Temp`. Take an arbitrary 10 records.
 
-Example result:</br>
-<img src="/assets/images/project.png" width="400">
+Example result:
+
+![Project](/assets/images/Project.png)
 
 [project-away operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectawayoperator)
 
@@ -501,7 +519,7 @@ Example result:</br>
 
 ---
 
-#### Task 4: Filter the output 🎓
+### Task 4: Filter the output 🎓
 
 Write a query to get only these specific desired columns: `deviceId`, `enqueuedTime`, `Temp`. Take an arbitrary 10 records from the past 90 days.
 
@@ -512,7 +530,7 @@ Hint 2: In case you see 0 records, remember that operators are sequenced by a pi
 
 ---
 
-#### Task 5: Sorting the results 🎓
+### Task 5: Sorting the results 🎓
 
 Write a query to get the 5 records which have the highest temperature. Write another query get the 5 records which have the lowest temperature.
 
@@ -533,7 +551,7 @@ Hint 2: We used 5.0 and 9.0, rather than 5 and 9 to ensure these numbers were re
 
 Example result:
 
-<img src="/assets/images/temp.png" width="600">
+![Temp](/assets/images/Temp.png)
 
 [extend operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator)
 [project-rename operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectrenameoperator)
@@ -541,7 +559,7 @@ Example result:
 
 ---
 
-#### Task 7: Total number of records 🎓
+### Task 7: Total number of records 🎓
 
 Write a query to find out how many records are in the table.
 
@@ -549,14 +567,15 @@ Write a query to find out how many records are in the table.
 
 ---
 
-#### Task 8: Aggregations and string operations 🎓
+### Task 8: Aggregations and string operations 🎓
 
 Write a query to find out how many records have a `deviceId` starting with 'x'.
 
 Write another query to find out how many records have a `deviceId` starting with 'x', per device ID (aggregated by deviceId).
 
-Example result for the second query:</br>
-<img src="/assets/images/count_by.png" width="250">
+Example result for the second query:
+
+![Count by](/assets/images/count_by.png)
 
 [String operators - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/datatypes-string-operators)
 
@@ -564,35 +583,38 @@ Example result for the second query:</br>
 
 ---
 
-#### Task 9: Render a chart 🎓
+### Task 9: Render a chart 🎓
 
 Write a query to find out how many records start with "x", per device ID (aggregated by device ID) and render a piechart.
 
-Example result:</br>
-<img src="/assets/images/pie.png" width="500">
+Example result:
+
+![Pie Chart](/assets/images/Pie.png)
 
 [render operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/renderoperator?pivots=azuredataexplorer)
 
 ---
 
-#### Task 10: Create bins and visualize time series 🎓
+### Task 10: Create bins and visualize time series 🎓
 
 Write a query to show a timechart of the number of records over time. Use 10 minute bins (buckets). Each point on the timechart represent the number of devices on that bucket.
 
-Example result:</br>
-<img src="/assets/images/chart.png" width="650">
+Example result:
+
+![Time Series Chart](/assets/images/chart.png)
 
 [bin() - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction)
 
 ---
 
-#### Task 11: Aggregations with time series visualizations 🎓
+### Task 11: Aggregations with time series visualizations 🎓
 
 Write a query to show a timechart of the **average temperature** over time. Use 30 minute bins (buckets) Each point on the timechart represent the average temperature in that 30 min period.
 Hint: summarize avg(Temp) by bin(enqueuedTime, 30m)
 
-Example result:</br>
-<img src="/assets/images/timeseries.png" width="650">
+Example result:
+
+![Time Series Chart 2](/assets/images/timeseries.png)
 
 [summarize operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/summarizeoperator)
 
@@ -604,26 +626,37 @@ Example result:</br>
 
 ---
 ---
-#### Challenge 4: Check stats and key metrics of the cluster
+
+## Challenge 4: Check stats and key metrics of the cluster
 
  ---
-  ##### Task 1:  #####
+
+  ### Task 1
+
   Go to the Insights blade in the portal (in the ADX cluster page, under monitoring). This blade provides comprehensive monitoring of your clusters by delivering a unified view of your cluster performance, operations, usage, and ingestion operations.
 
   ---
-  ##### Task 2: #####
+
+  ### Task 2
+
   Go to the Overview tab: It provides metrics tiles that highlight the availability and overall status of the cluster for quick health assessment. A summary of active Azure Advisor recommendations and resource health status. Charts that show the top CPU and memory consumers and the number of unique users over time.
 
   ---
-  ##### Task 3: #####
+
+  ### Task 3
+
   Go to the Key Metrics tab: It shows a unified view of some of the cluster's metrics. They're grouped into general metrics, query-related metrics, ingestion-related metrics, and streaming ingestion-related metrics.
 
   ---
-  ##### Task 4: #####
+
+  ### Task 4
+
   Go to The Ingestion tab: It provides details about the ingestion operations, including the result of your ingestion attempts (per DB of per table), the latency of the ingestion process, and more.
 
   ---
-  ##### Task 5: #####
+
+  ### Task 5
+
   Go to the Overview tab: You can stop the cluster to save compute costs. You will not lose any data. ADX persists data on blob storage. When you restart your cluster, it will take few minutes to startup and warm up the cache before you can start writing the queries. When the cluster has been stopped, no continuous ingestion will be performed.
 
 **Relevant docs for this challenge:**

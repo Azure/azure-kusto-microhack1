@@ -2,7 +2,7 @@
 
 This Microhack is organized into the following 3 challenges:
 
-- Challenge 1: Create an ADX cluster
+- Challenge 1: Create an ADX Cluster
 - Challenge 2: Create integration with Azure services (Event Hub and Storage Account)
 - Challenge 3: Starting with the basics of KQL
 <!---- Challenge 4: Check stats and key metrics of the cluster -->
@@ -317,7 +317,7 @@ For additional context, you will notice that a new Event Hub Data Connection is 
 This time, we will ingest data from an Azure Storage account. We will ingest two datasets:
 
 1. Logistics telemetry data. This time, the table will be named: `LogisticsTelemetryHistorical`
-2. Data on New York City Taxi rides, which will be used for Microhack. This table will be called: `NYCTaxiRides`
+2. Data on New York City Taxi rides, which will be used for Microhack 2. This table will be called: `NYCTaxiRides`
 
 With the "Try new Get Data" layout enabled on the top menu bar, select the "Get data" segment to get started.
 
@@ -390,7 +390,7 @@ Think of it like a funnel, where you start out with an entire data table. Each t
 Let's look at an example query:
 
 ```Kusto
-LogisticsTelemetryHistorical
+LogisticsTelemetry
 | where enqueuedTime > ago(7d)
 | where messageSource == "telemetry"
 | count
@@ -485,46 +485,55 @@ LogisticsTelemetry
 | render timechart
 ```
 
-For the following tasks, we will use the table `LogisticsTelemetryHistorical`.
+For the following tasks, we will use the `LogisticsTelemetry` and `LogisticsTelemetryHistorical` tables interchangeably.
 
 ---
 
 ### Task 2: Explore the table and columns 🎓
 
-Write a query to get the schema of the table.
+📆 Use table: `LogisticsTelemetry`
 
-Hint 1: Observe that new columns like `Shock`, `Temp` are extracted from the original message.
+✍🏻 Write a query to add `NumOfTagsCalculated`, `Shock` and `Temp` as calculated columns with the data type: _real_, then get the schema of the table.
+
+🕵🏻 Hint 1: Observe that new columns like `NumOfTagsCalculated`, `Shock`, `Temp` are extracted from the telemetry payload and do not exist on the `LogisticsTelemetry` table.
+🕵🏻 Hint 2: `NumOfTagsCalculated` is simply the total tag count.
+
+🤔 Do you know why the default column type is _dynamic_ when we attempt to access a nested JSON element, and how we parse it to the type: _real_?
 
 Example result:
 
 ![Schema](/assets/images/Schema.png)
 
 [extend operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator)
-
 [getschema operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/getschemaoperator)
 
 ---
 
 ### Task 3: Keep the columns of your interest 🎓
 
-Write a query to get only specific desired columns: `deviceId`, `enqueuedTime`, `Temp`. Take an arbitrary 10 records.
+📆 Use table: `LogisticsTelemetry`
+
+✍🏻 Write a query to get only the specific desired columns: `deviceId`, `enqueuedTime`, `Temp`. Take an arbitrary 10 records.
+
+🕵🏻 Hint: `Temp` doesn't exist as a column, but you've already figured out how to extract it in the previous task.
 
 Example result:
 
 ![Project](/assets/images/project.png)
 
 [project-away operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectawayoperator)
-
 [Project operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator)
 
 ---
 
 ### Task 4: Filter the output 🎓
 
-Write a query to get only these specific desired columns: `deviceId`, `enqueuedTime`, `Temp`. Take an arbitrary 10 records from the past 90 days.
+📆 Use table: `LogisticsTelemetry`
 
-Hint 1: "ago"
-Hint 2: In case you see 0 records, remember that operators are sequenced by a pipe (`|`). Data is piped, from one operator to the next. The data is filtered or manipulated at each step and then fed into the following step. By using the `take` operator, there is no guarantee which records are returned.
+✍🏻 Write a query to get only these specific desired columns: `deviceId`, `enqueuedTime`, `Temp`. Take an arbitrary 10 records from the past 90 days.
+
+🕵🏻 Hint 1: "ago"
+🕵🏻 Hint 2: In case you see 0 records, remember that operators are sequenced by a pipe (`|`). Data is piped, from one operator to the next. The data is filtered or manipulated at each step and then fed into the following step. By using the `take` operator, there is no guarantee which records are returned.
 
 [where operator in Kusto query language - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/whereoperator)
 
@@ -532,7 +541,12 @@ Hint 2: In case you see 0 records, remember that operators are sequenced by a pi
 
 ### Task 5: Sorting the results 🎓
 
-Write a query to get the 5 records which have the highest temperature. Write another query get the 5 records which have the lowest temperature.
+📆 Use table: `LogisticsTelemetry`
+
+✍🏻 Write a query to get the 5 records which have the highest temperature.
+✍🏻 Write another query get the 5 records which have the lowest temperature.
+
+🕵🏻 Hint: Try a few different operators and submit both queries in the same Answer Sheet response.
 
 [sort operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/sortoperator)
 [top operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator)
@@ -541,13 +555,14 @@ Write a query to get the 5 records which have the highest temperature. Write ano
 
 #### Task 6: Reorder, rename, add columns 🎓
 
-Currently, temperature data is in Fahrenheit. Write a query to convert Fahrenheit temperatures to Celsius temperatures. For readability, show the Fahrenheit temperature and the Celsius temperatures as the 2 left-most columns. You can use the following formula:
+📆 Use table: `LogisticsTelemetry`
 
-`°C = (°F – 32) * (5.0/9.0)`
+✍🏻 Currently, temperature data is in Fahrenheit. Write a query to convert Fahrenheit temperatures to Celsius temperatures. For readability, show the Fahrenheit temperature and the Celsius temperatures as the 2 left-most columns. You can use the following formula: `°C = (°F – 32) * (5.0/9.0)`
 
 Take 5 random records from the past week.
-Hint 1: 'project' operator provides lot more features
-Hint 2: We used 5.0 and 9.0, rather than 5 and 9 to ensure these numbers were read as `real` data types (double-precision floating-point format), rather than `long` (a signed integer, Int64)
+
+🕵🏻 Hint 1: The `project` operator provides a lot more features.
+🕵🏻 Hint 2: We used 5.0 and 9.0, rather than 5 and 9 to ensure these numbers were read as `real` data types (double-precision floating-point format), rather than `long` (a signed integer, Int64).
 
 Example result:
 
@@ -561,7 +576,11 @@ Example result:
 
 ### Task 7: Total number of records 🎓
 
-Write a query to find out how many records are in the table.
+📆 Use table: `LogisticsTelemetry`
+
+✍🏻 Write a query to find out how many records are in the table.
+
+🤔 Can you explain why the number of records in the `LogisticsTelemetry` table changes every few minutes while the number of records in the `LogisticsTelemetryHistorical` table doesn't?
 
 [count operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/countoperator)
 
@@ -569,23 +588,26 @@ Write a query to find out how many records are in the table.
 
 ### Task 8: Aggregations and string operations 🎓
 
-Write a query to find out how many records have a `deviceId` starting with 'x'.
+📆 Use table: `LogisticsTelemetryHistorical`
 
-Write another query to find out how many records have a `deviceId` starting with 'x', per device ID (aggregated by deviceId).
+✍🏻 Write a query over the historical data to find out how many records have a `deviceId` starting with 'x'.
+
+✍🏻 Write another query to find out how many records have a `deviceId` starting with 'x', per device ID (aggregated by deviceId).
 
 Example result for the second query:
 
 ![Count by](/assets/images/count_by.png)
 
 [String operators - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/datatypes-string-operators)
-
 [summarize operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/summarizeoperator)
 
 ---
 
 ### Task 9: Render a chart 🎓
 
-Write a query to find out how many records start with "x", per device ID (aggregated by device ID) and render a piechart.
+📆 Use table: `LogisticsTelemetryHistorical`
+
+✍🏻 Write a query over the historical data to find out how many records start with "x", per device ID (aggregated by device ID) and render a piechart.
 
 Example result:
 
@@ -597,7 +619,9 @@ Example result:
 
 ### Task 10: Create bins and visualize time series 🎓
 
-Write a query to show a timechart of the number of records over time. Use 10 minute bins (buckets). Each point on the timechart represent the number of devices on that bucket.
+📆 Use table: `LogisticsTelemetryHistorical`
+
+✍🏻 Write a query to show a timechart of the number of historical records over time. Use 10 minute bins (buckets). Each point on the timechart represent the number of devices in that bucket.
 
 Example result:
 
@@ -609,8 +633,11 @@ Example result:
 
 ### Task 11: Aggregations with time series visualizations 🎓
 
-Write a query to show a timechart of the **average temperature** over time. Use 30 minute bins (buckets) Each point on the timechart represent the average temperature in that 30 min period.
-Hint: summarize avg(Temp) by bin(enqueuedTime, 30m)
+📆 Use table: `LogisticsTelemetryHistorical`
+
+✍🏻 Write a query to show a timechart of the historical data's **average temperature** over time. Use 30 minute bins (buckets) Each point on the timechart represent the average temperature in that 30 minute period.
+
+🕵🏻 Hint: `summarize avg(Temp) by bin(enqueuedTime, 30m)`
 
 Example result:
 

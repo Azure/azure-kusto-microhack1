@@ -239,7 +239,7 @@ In the Configure tab - specify the Event Hub details:
 
 The 'Nested levels' field expands levels of nested data in dynamic type columns into separate columns. Although the raw event’s JSON format has a nestedness of 2 levels, for this microhack we will use 1 level and later see how to leverage the powerful update policy capability of ADX to break this payload into dynamic columns.
 
-This is an example of the telemetry JSON (that is part of a bigger JSON that is being sent from the evet hub):
+This is an example of the telemetry payload (which is part of a bigger JSON message that is being received by ADX from the Event Hub):
 
 ```json
 {

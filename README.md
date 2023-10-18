@@ -17,22 +17,23 @@ Each challenge has a set of tasks that need to be completed in order to move on 
 
 ## Challenge 1: Create an ADX Cluster
 
-To use Azure Data Explorer (ADX), you first have to create an ADX cluster, and create one or more databases in that cluster. Each database has tables. Then you can ingest data into a database so that you can run queries against it.
+To use Azure Data Explorer (ADX), you first have to create an ADX cluster, and create one or more databases in that cluster. Each database has tables. Then you can ingest data into a table so that you can run queries against it.
 
 In this challenge, you will design an ADX based architecture, create an ADX cluster and database.
-In addition, you will get familiarized with two tools that enable you to connect to your Azure Data Explorer and run queries.
+
+In addition, you will get familiar with the Azure Data Explorer Web UI (Kusto Web Explorer).
 
 ### Expected Learning Outcomes
 
 - Deploy ADX cluster from Azure Portal
-- Use ADX clients such as Kusto Web Explorer and Kusto Explorer
+- Use ADX clients such as Kusto Web Explorer and Kusto Explorer (optional)
 - The initial configuration of the cluster at creation time
 
 ---
 
 ### Task 1: Create an ADX cluster resource
 
-Sign in to the Azure portal, select the + Create a resource button in the upper-left corner of the portal’s main page.
+Sign in to the Azure Portal, select the `+ Create a resource` button in the upper-left corner of the portal’s main page.
 
 ![Create a resource](/assets/images/Challenge1-Task1-Pic1.png)
 
@@ -114,11 +115,11 @@ Now - you can write a simple KQL query: `print("hello world")` and hit the **Run
 
 ![Query Blade Overview](/assets/images/Challenge1-Task3-Pic2.png)
 
-Windows users can also download [Kusto Explorer](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/tools/kusto-explorer), a desktop client to run queries and benefit from advanced features available in the client.
+> 📝 **Tip:** Windows users can also download [Kusto Explorer](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/tools/kusto-explorer), a desktop client to run queries and benefit from advanced features available in the client.
 
 ---
 
-### Task 4: Enable Diagnostic Logs
+### Task 4: Enable Diagnostic Logs (optional)
 
 Azure Monitor diagnostic logs provide monitoring data about the operation of Azure resources. ADX uses diagnostic logs for insights on ingestion, commands, queries, and tables usage. You can export operation logs to Azure Storage, Event Hub, or Log Analytics.
 

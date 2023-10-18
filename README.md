@@ -525,8 +525,8 @@ Example result:
 
 References:
 
-- [project-away operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectawayoperator)
-- [Project operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator)
+- [project-away operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectawayoperator)
+- [project operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator)
 
 ---
 
@@ -541,7 +541,7 @@ References:
 
 References:
 
-- [where operator in Kusto query language - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/whereoperator)
+- [where operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/whereoperator)
 
 ---
 
@@ -556,8 +556,8 @@ References:
 
 Refernces:
 
-- [sort operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/sortoperator)
-- [top operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator)
+- [sort operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/sortoperator)
+- [top operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator)
 
 ---
 
@@ -594,7 +594,7 @@ References:
 
 References:
 
-- [count operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/countoperator)
+- [count operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/countoperator)
 
 ---
 
@@ -612,8 +612,8 @@ Example result for the second query:
 
 References:
 
-- [String operators - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/datatypes-string-operators)
-- [summarize operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/summarizeoperator)
+- [string operators](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/datatypes-string-operators)
+- [summarize operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/summarizeoperator)
 
 ---
 
@@ -629,7 +629,7 @@ Example result:
 
 References:
 
-- [render operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/renderoperator?pivots=azuredataexplorer)
+- [render operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/renderoperator?pivots=azuredataexplorer)
 
 ---
 
@@ -645,7 +645,7 @@ Example result:
 
 References:
 
-- [bin() - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction)
+- [bin function](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction)
 
 ---
 
@@ -653,7 +653,7 @@ References:
 
 📆 Use table: `LogisticsTelemetryHistorical`
 
-✍🏻 Write a query to show a timechart of the historical data's **average temperature** over time. Use 30 minute bins (buckets) Each point on the timechart represent the average temperature in that 30 minute period.
+✍🏻 Write a query to show a timechart of the historical data's **average temperature** over time. Use 30 minute bins (buckets). Each point on the timechart represent the average temperature in that 30 minute period.
 
 🕵🏻 Hint: `summarize avg(Temp) by bin(enqueuedTime, 30m)`
 

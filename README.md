@@ -68,7 +68,8 @@ When the deployment is complete, select **Go to resource**. You will be redirect
 
 ### Task 2: Create a Database
 
-- You're now ready for the second step in the process: Database Creation.
+You're now ready for the second step in the process: Database Creation.
+
 - On the Overview tab, select Create database. Alternatively, you can go to the “Databases” blade.
 
   ![Overview Tab](/assets/images/Challenge1-Task2-Pic1.png)
@@ -348,7 +349,7 @@ Wait for the ingestion to be completed. For production modes, you could use Azur
 ![Screen capture 1](/assets/images/Challenge2-Task3-Pic6.png)
  ![Screen capture 1](/assets/images/Challenge2-Task3-Pic7.png) -->
 
-Verify that data was ingested to the table
+Verify that data was ingested to the table by running the following query and observing the row count:
 
 ```Kusto
 LogisticsTelemetryHistorical
@@ -359,8 +360,8 @@ Repeat the above steps for ingesting data from the New York City Taxi dataset.
 
 **Relevant docs for this challenge:**
 
-- [Azure Data Explorer data ingestion overview | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/ingest-data-overview)
-- [Use one-click ingestion to ingest data into Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/ingest-data-one-click)
+- [Azure Data Explorer data ingestion overview](https://docs.microsoft.com/en-us/azure/data-explorer/ingest-data-overview)
+- [Use one-click ingestion to ingest data into Azure Data Explorer](https://docs.microsoft.com/en-us/azure/data-explorer/ingest-data-one-click)
 
 ---
 
@@ -442,7 +443,7 @@ LogisticsTelemetry
 | summarize count() // or: count
 ```
 
-Find out how many records have an `enqueuedTime` bigger than the last 10 minutes
+Find out how many records have an `enqueuedTime` bigger than the last 10 minutes (received in the last 10 minutes)
 
 ```Kusto
 LogisticsTelemetry
@@ -458,7 +459,7 @@ LogisticsTelemetry
 | summarize count()
 ```
 
-Find out how many records have a `deviceId` that starts with "x", per device ID (aggregate by device ID)
+Find out how many records have a `deviceId` that starts with "x", per device ID (aggregated by device ID)
 
 ```Kusto
 LogisticsTelemetry
@@ -466,7 +467,7 @@ LogisticsTelemetry
 | summarize count() by deviceId
 ```
 
-Find out how many records start with "x", per device ID (aggregate by device ID). Render a piechart
+Find out how many records start with "x", per device ID (aggregated by device ID) and render the result to a piechart
 
 ```Kusto
 LogisticsTelemetry
@@ -485,7 +486,9 @@ LogisticsTelemetry
 | render timechart
 ```
 
-For the following tasks, we will use the `LogisticsTelemetry` and `LogisticsTelemetryHistorical` tables interchangeably.
+**Brilliant!** You can see how easy it is to query data in ADX using the Kusto Query Language (KQL). Already, we derived basic insights from our data.
+
+For the following tasks, we will continue using the `LogisticsTelemetry` table and begin introducing the `LogisticsTelemetryHistorical` table.
 
 ---
 
@@ -499,7 +502,7 @@ For the following tasks, we will use the `LogisticsTelemetry` and `LogisticsTele
 
 🕵🏻 Hint 2: `NumOfTagsCalculated` is simply the total tag count.
 
-🤔 Do you know why the default column type is _dynamic_ when we attempt to access a nested JSON element, and how we parse it to the type: _real_?
+🤔 Do you know why the default column type is _dynamic_ when we attempt to access a nested JSON element, and how we parse it to type: _real_?
 
 Example result:
 
@@ -518,7 +521,7 @@ References:
 
 ✍🏻 Write a query to get only the specific desired columns: `deviceId`, `enqueuedTime`, `Temp`. Take an arbitrary 10 records.
 
-🕵🏻 Hint: `Temp` doesn't exist as a column, but you've already figured out how to extract it in the previous task.
+🕵🏻 Hint: `Temp` doesn't exist as a column in the source table, but you have already figured out how to extract it in the previous task.
 
 Example result:
 
@@ -535,7 +538,7 @@ References:
 
 📆 Use table: `LogisticsTelemetry`
 
-✍🏻 Write a query to get only these specific desired columns: `deviceId`, `enqueuedTime`, `Temp`. Take an arbitrary 10 records from the past 90 days.
+✍🏻 Write a query to get only these specific columns: `deviceId`, `enqueuedTime`, `Temp`. Take an arbitrary 10 records from the past 90 days.
 
 🕵🏻 Hint 1: "ago"
 
@@ -568,7 +571,7 @@ Refernces:
 
 📆 Use table: `LogisticsTelemetry`
 
-✍🏻 Currently, temperature data is in Fahrenheit. Write a query to convert Fahrenheit temperatures to Celsius temperatures. For readability, show the Fahrenheit temperature and the Celsius temperatures as the 2 left-most columns. You can use the following formula: `°C = (°F – 32) * (5.0/9.0)`
+✍🏻 Currently, all temperature values are in Fahrenheit. Write a query to convert Fahrenheit temperatures to Celsius temperatures. For readability, show the Fahrenheit temperature and the Celsius temperatures as the 2 left-most columns. You can use the following formula: `°C = (°F – 32) * (5.0/9.0)`
 
 Take 5 random records from the past week.
 
@@ -608,7 +611,7 @@ References:
 
 ✍🏻 Write a query over the historical data to find out how many records have a `deviceId` starting with 'x'.
 
-✍🏻 Write another query to find out how many records have a `deviceId` starting with 'x', per device ID (aggregated by deviceId).
+✍🏻 Write another query to find out how many records have a `deviceId` starting with 'x', per device ID (aggregated by device id).
 
 Example result for the second query:
 
@@ -711,6 +714,6 @@ References:
   Go to the Overview tab: You can stop the cluster to save compute costs. You will not lose any data. ADX persists data on blob storage. When you restart your cluster, it will take few minutes to startup and warm up the cache before you can start writing the queries. When the cluster has been stopped, no continuous ingestion will be performed.
 
 **Relevant docs for this challenge:**
-  - [Monitor Azure Data Explorer performance, health & usage with metrics | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/using-metrics)
+  - [Monitor Azure Data Explorer performance, health & usage with metrics](https://docs.microsoft.com/en-us/azure/data-explorer/using-metrics)
 
 -->

@@ -504,8 +504,10 @@ Example result:
 
 ![Schema](/assets/images/Schema.png)
 
-[extend operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator)
-[getschema operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/getschemaoperator)
+References:
+
+- [extend operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator)
+- [getschema operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/getschemaoperator)
 
 ---
 
@@ -521,8 +523,10 @@ Example result:
 
 ![Project](/assets/images/project.png)
 
-[project-away operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectawayoperator)
-[Project operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator)
+References:
+
+- [project-away operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectawayoperator)
+- [Project operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectoperator)
 
 ---
 
@@ -535,7 +539,9 @@ Example result:
 🕵🏻 Hint 1: "ago"
 🕵🏻 Hint 2: In case you see 0 records, remember that operators are sequenced by a pipe (`|`). Data is piped, from one operator to the next. The data is filtered or manipulated at each step and then fed into the following step. By using the `take` operator, there is no guarantee which records are returned.
 
-[where operator in Kusto query language - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/whereoperator)
+References:
+
+- [where operator in Kusto query language - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/whereoperator)
 
 ---
 
@@ -548,8 +554,10 @@ Example result:
 
 🕵🏻 Hint: Try a few different operators and submit both queries in the same Answer Sheet response.
 
-[sort operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/sortoperator)
-[top operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator)
+Refernces:
+
+- [sort operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/sortoperator)
+- [top operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator)
 
 ---
 
@@ -568,9 +576,11 @@ Example result:
 
 ![Temp](/assets/images/temp.png)
 
-[extend operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator)
-[project-rename operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectrenameoperator)
-[project-reorder operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectreorderoperator)
+References:
+
+- [extend operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/extendoperator)
+- [project-rename operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectrenameoperator)
+- [project-reorder operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/projectreorderoperator)
 
 ---
 
@@ -582,7 +592,9 @@ Example result:
 
 🤔 Can you explain why the number of records in the `LogisticsTelemetry` table changes every few minutes while the number of records in the `LogisticsTelemetryHistorical` table doesn't?
 
-[count operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/countoperator)
+References:
+
+- [count operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/countoperator)
 
 ---
 
@@ -598,8 +610,10 @@ Example result for the second query:
 
 ![Count by](/assets/images/count_by.png)
 
-[String operators - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/datatypes-string-operators)
-[summarize operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/summarizeoperator)
+References:
+
+- [String operators - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/datatypes-string-operators)
+- [summarize operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/summarizeoperator)
 
 ---
 
@@ -613,7 +627,9 @@ Example result:
 
 ![Pie Chart](/assets/images/pie.png)
 
-[render operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/renderoperator?pivots=azuredataexplorer)
+References:
+
+- [render operator - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/renderoperator?pivots=azuredataexplorer)
 
 ---
 
@@ -627,7 +643,9 @@ Example result:
 
 ![Time Series Chart](/assets/images/chart.png)
 
-[bin() - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction)
+References:
+
+- [bin() - Azure Data Explorer | Microsoft Docs](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/binfunction)
 
 ---
 
@@ -643,7 +661,9 @@ Example result:
 
 ![Time Series Chart 2](/assets/images/timeseries.png)
 
-[summarize operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/summarizeoperator)
+References:
+
+- [summarize operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/summarizeoperator)
 
 ---
 

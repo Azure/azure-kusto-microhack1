@@ -496,6 +496,7 @@ For the following tasks, we will use the `LogisticsTelemetry` and `LogisticsTele
 ✍🏻 Write a query to add `NumOfTagsCalculated`, `Shock` and `Temp` as calculated columns with the data type: _real_, then get the schema of the table.
 
 🕵🏻 Hint 1: Observe that new columns like `NumOfTagsCalculated`, `Shock`, `Temp` are extracted from the telemetry payload and do not exist on the `LogisticsTelemetry` table.
+
 🕵🏻 Hint 2: `NumOfTagsCalculated` is simply the total tag count.
 
 🤔 Do you know why the default column type is _dynamic_ when we attempt to access a nested JSON element, and how we parse it to the type: _real_?
@@ -537,6 +538,7 @@ References:
 ✍🏻 Write a query to get only these specific desired columns: `deviceId`, `enqueuedTime`, `Temp`. Take an arbitrary 10 records from the past 90 days.
 
 🕵🏻 Hint 1: "ago"
+
 🕵🏻 Hint 2: In case you see 0 records, remember that operators are sequenced by a pipe (`|`). Data is piped, from one operator to the next. The data is filtered or manipulated at each step and then fed into the following step. By using the `take` operator, there is no guarantee which records are returned.
 
 References:
@@ -550,6 +552,7 @@ References:
 📆 Use table: `LogisticsTelemetry`
 
 ✍🏻 Write a query to get the 5 records which have the highest temperature.
+
 ✍🏻 Write another query get the 5 records which have the lowest temperature.
 
 🕵🏻 Hint: Try a few different operators and submit both queries in the same Answer Sheet response.
@@ -570,6 +573,7 @@ Refernces:
 Take 5 random records from the past week.
 
 🕵🏻 Hint 1: The `project` operator provides a lot more features.
+
 🕵🏻 Hint 2: We used 5.0 and 9.0, rather than 5 and 9 to ensure these numbers were read as `real` data types (double-precision floating-point format), rather than `long` (a signed integer, Int64).
 
 Example result:

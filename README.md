@@ -154,7 +154,7 @@ ADX supports several ingestion methods. These methods include ingestion tools, c
 
 ### Task 1: Use the "One-click" UI (User Interface) to create a data connection to an Azure Event Hub
 
-For the best user experience, we will use the Azure Data Explorer Web UI (aka: Kusto web Explorer/KWE). To open it, go to "Query" Pane and click on the “Open in Web UI” or just go to [Kusto Web Explorer](https://dataexplorer.azure.com).The web UI opens.
+For the best user experience, we will use the Azure Data Explorer Web UI (aka: Kusto web Explorer/KWE). To open it, go to "Query" Pane and click on the “Open in Web UI” or just go to [Kusto Web Explorer](https://dataexplorer.azure.com). The web UI opens.
 
 ![Screen capture 1](/assets/images/Challenge2-Task1-Pic1.png)
 
@@ -306,7 +306,7 @@ Use the "Explore" link (under "What can you do with the data?"). Review the quer
 
 Notice that the query begins with a reference to the data table. This data is piped into the first and only operator in our query (`take`) and returns a specific number of arbitrary rows.
 
-Run the query by either selecting the Run button above the query window or selecting Shift+Enter on the keyboard.
+Run the query by either selecting the Run button above the query window or selecting <kbd>Shift</kbd> + <kbd>Enter</kbd> on the keyboard.
 
 For additional context, you will notice that a new Event Hub Data Connection is created on the ADX Database resource in the Azure Portal. We can use this to monitor the ingestion status and to troubleshoot any issues.
 
@@ -421,7 +421,7 @@ For the following tasks, connect to the cluster [ADX Microhack Cluster](https://
 ### Task 1: Basic KQL queries - explore the data
 
 In this task, you will see some KQL examples. For this task, we will use the table `LogisticsTelemetry`, which obtains data from the Event Hub. </br>
-Execute the queries and view the results. KQL queries can be used to filter data and return specific information. Now, you'll learn how to choose specific rows of the data. The where operator filters results that satisfy a certain condition.
+Execute the queries and view the results. KQL queries can be used to filter data and return specific information. Now, you'll learn how to choose specific rows of the data. The `where` operator filters results that satisfy a certain condition.
 
 ```Kusto
 LogisticsTelemetry
@@ -505,7 +505,7 @@ For the following tasks, we will continue using the `LogisticsTelemetry` table a
 
 🕵🏻 Hint 1: Observe that new columns like `NumOfTagsCalculated`, `Shock`, `Temp` are extracted from the telemetry payload and do not exist on the `LogisticsTelemetry` table.
 
-🕵🏻 Hint 2: `NumOfTagsCalculated` is simply the total tag count.
+🕵🏻 Hint 2: `NumOfTagsCalculated` is the total tag count minus the lost tags.
 
 🤔 Do you know why the default column type is _dynamic_ when we attempt to access a nested JSON element, and how we parse it to type: _real_?
 
@@ -565,7 +565,7 @@ References:
 
 🕵🏻 Hint: Try a few different operators and submit both queries in the same Answer Sheet response.
 
-Refernces:
+References:
 
 - [sort operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/sortoperator)
 - [top operator](https://docs.microsoft.com/en-us/azure/data-explorer/kusto/query/topoperator)
@@ -649,7 +649,7 @@ References:
 
 📆 Use table: `LogisticsTelemetryHistorical`
 
-✍🏻 Write a query to show a timechart of the number of historical records over time. Use 10 minute bins (buckets). Each point on the timechart represent the number of devices in that bucket.
+✍🏻 Write a query to show a timechart of the number of historical records over time. Use 10-minute bins (buckets). Each point on the timechart represent the number of devices in that bucket.
 
 Example result:
 
@@ -665,7 +665,7 @@ References:
 
 📆 Use table: `LogisticsTelemetryHistorical`
 
-✍🏻 Write a query to show a timechart of the historical data's **average temperature** over time. Use 30 minute bins (buckets). Each point on the timechart represent the average temperature in that 30 minute period.
+✍🏻 Write a query to show a timechart of the historical data's **average temperature** over time. Use 30-minute bins (buckets). Each point on the timechart represent the average temperature in that 30-minute period.
 
 🕵🏻 Hint: `summarize avg(Temp) by bin(enqueuedTime, 30m)`
 

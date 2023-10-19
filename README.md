@@ -437,6 +437,8 @@ LogisticsTelemetry
 | take 10
 ```
 
+> 📝 **Tip:** You can use the <kbd>Shift</kbd> + <kbd>Enter</kbd> keyboard shortcut to run the selected KQL code in the Kusto Web Explorer.
+
 Find out how many records are in the table
 
 ```Kusto
@@ -486,6 +488,8 @@ LogisticsTelemetry
 | summarize avg(toint(h)) by bin(enqueuedTime, 1h)
 | render timechart
 ```
+
+> 📝 **Tip:** You can use the <kbd>Alt</kbd> + <kbd>Shift</kbd> + <kbd>F</kbd> keyboard shortcut to auto-format your KQL code in the Kusto Web Explorer and make it more readable.
 
 **Brilliant!** You can see how easy it is to query data in ADX using the Kusto Query Language (KQL). Already, we derived basic insights from our data.
 
